@@ -155,10 +155,14 @@ const EditUserModal = ({
               <input
                 type="checkbox"
                 checked={formData.email_verified}
-                onChange={(e) => handleInputChange("email_verified", e.target.checked)}
+                onChange={(e) =>
+                  handleInputChange("email_verified", e.target.checked)
+                }
                 className="h-4 w-4 rounded border-(--color-border) text-(--color-accent) focus:ring-(--color-accent)"
               />
-              <span className="ml-2 text-sm text-(--color-text)">Email is verified</span>
+              <span className="ml-2 text-sm text-(--color-text)">
+                Email is verified
+              </span>
             </div>
           </div>
 
@@ -170,10 +174,14 @@ const EditUserModal = ({
               <input
                 type="checkbox"
                 checked={formData.phone_verified}
-                onChange={(e) => handleInputChange("phone_verified", e.target.checked)}
+                onChange={(e) =>
+                  handleInputChange("phone_verified", e.target.checked)
+                }
                 className="h-4 w-4 rounded border-(--color-border) text-(--color-accent) focus:ring-(--color-accent)"
               />
-              <span className="ml-2 text-sm text-(--color-text)">Phone is verified</span>
+              <span className="ml-2 text-sm text-(--color-text)">
+                Phone is verified
+              </span>
             </div>
           </div>
         </div>
