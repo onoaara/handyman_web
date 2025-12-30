@@ -95,7 +95,7 @@ export default function SupervisorHandymen() {
     <div>
       <h2 className="mb-4 text-2xl font-semibold">Handymen</h2>
       <div className="mb-4 flex items-center justify-between">
-        <p className="text-sm text-[var(--color-text-muted)]">
+        <p className="text-sm text-(--color-text-muted)">
           {isLoading || isFetching ? "Loading..." : " "}
         </p>
         <button
@@ -115,7 +115,7 @@ export default function SupervisorHandymen() {
               toast.error(message);
             }
           }}
-          className="rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-2 text-sm text-[var(--color-text)] hover:opacity-90 disabled:opacity-60"
+          className="rounded-lg border border-(--color-border) bg-(--color-bg) px-3 py-2 text-sm text-(--color-text) hover:opacity-90 disabled:opacity-60"
           disabled={isLoading || isFetching}
         >
           Refresh
@@ -123,7 +123,7 @@ export default function SupervisorHandymen() {
       </div>
 
       {errorMessage ? (
-        <div className="mb-4 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-3 text-sm text-[var(--color-text)]">
+        <div className="mb-4 rounded-lg border border-(--color-border) bg-(--color-surface) px-4 py-3 text-sm text-(--color-text)">
           {errorMessage}
         </div>
       ) : null}
