@@ -5,12 +5,18 @@ import { toast } from "sonner";
 import UsersTable from "../../../components/UsersTable";
 import EditUserModal from "../../../components/EditUserModal";
 import CreateUserModal from "../../../components/CreateUserModal";
-import { useGetUsersQuery } from "../../../features/users/usersApi";
+import {
+  useGetUsersQuery,
+  useCreateUserMutation,
+  useUpdateUserMutation,
+} from "../../../features/users/usersApi";
 import { filterUsersByRole } from "../../../features/users/userRoles";
 import type { ApiUser } from "../../../features/users/usersApi";
 
 export default function SupervisorHandymen() {
   const { data, isLoading, isFetching, error, refetch } = useGetUsersQuery();
+  const [createUser] = useCreateUserMutation();
+  const [updateUser] = useUpdateUserMutation();
   const users = filterUsersByRole(data ?? [], "handyman");
 
   const errorMessage =
@@ -41,10 +47,24 @@ export default function SupervisorHandymen() {
   };
 
   const handleSaveUser = async (userId: string, updates: Partial<ApiUser>) => {
-    // TODO: Implement user update API call
-    console.log("Saving user:", userId, updates);
-    // For now, just refresh the data
-    await refetch();
+    try {
+      await updateUser({
+        id: userId,
+        updates,
+      }).unwrap();
+      toast.success("Handyman updated successfully");
+      await refetch();
+    } catch (error) {
+      const message =
+        error && typeof error === "object" && "error" in error
+          ? String(
+              (error as { error?: unknown }).error ??
+                "Failed to update handyman"
+            )
+          : "Failed to update handyman";
+      toast.error(message);
+      throw error;
+    }
   };
 
   const handleCreateNewUser = async (userData: {
@@ -54,10 +74,21 @@ export default function SupervisorHandymen() {
     role: string;
     password: string;
   }) => {
-    // TODO: Implement user creation API call
-    console.log("Creating user:", userData);
-    // For now, just refresh the data
-    await refetch();
+    try {
+      await createUser(userData).unwrap();
+      toast.success("Handyman created successfully");
+      await refetch();
+    } catch (error) {
+      const message =
+        error && typeof error === "object" && "error" in error
+          ? String(
+              (error as { error?: unknown }).error ??
+                "Failed to create handyman"
+            )
+          : "Failed to create handyman";
+      toast.error(message);
+      throw error;
+    }
   };
 
   return (

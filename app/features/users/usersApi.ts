@@ -43,7 +43,37 @@ export const usersApi = createApi({
         return { error: "Failed to fetch users" };
       },
     }),
+    createUser: builder.mutation<
+      ApiUser,
+      {
+        name: string;
+        email: string;
+        location: string;
+        role: string;
+        password: string;
+      }
+    >({
+      query: (userData) => ({
+        url: "/users",
+        method: "POST",
+        body: userData,
+      }),
+    }),
+    updateUser: builder.mutation<
+      ApiUser,
+      { id: string; updates: Partial<ApiUser> }
+    >({
+      query: ({ id, updates }) => ({
+        url: `/users/${id}`,
+        method: "PATCH",
+        body: updates,
+      }),
+    }),
   }),
 });
 
-export const { useGetUsersQuery } = usersApi;
+export const {
+  useGetUsersQuery,
+  useCreateUserMutation,
+  useUpdateUserMutation,
+} = usersApi;

@@ -2,22 +2,22 @@
 
 :root {
   --color-bg: #ffffff;
-  --color-surface: #ffffff;
-  --color-text: #164a41;
-  --color-text-muted: #4d774e;
-  --color-border: #9dc88d;
-  --color-accent: #f1b24a;
-  --color-on-accent: #164a41;
+  --color-surface: #f8fafc;
+  --color-text: #1e293b;
+  --color-text-muted: #64748b;
+  --color-border: #e2e8f0;
+  --color-accent: #3b82f6;
+  --color-on-accent: #ffffff;
 }
 
 html[data-theme="dark"] {
-  --color-bg: #164a41;
-  --color-surface: #4d774e;
-  --color-text: #ffffff;
-  --color-text-muted: #9dc88d;
-  --color-border: #9dc88d;
-  --color-accent: #f1b24a;
-  --color-on-accent: #164a41;
+  --color-bg: #0f172a;
+  --color-surface: #1e293b;
+  --color-text: #f1f5f9;
+  --color-text-muted: #94a3b8;
+  --color-border: #334155;
+  --color-accent: #3b82f6;
+  --color-on-accent: #ffffff;
 }
 
 html,

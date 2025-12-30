@@ -5,12 +5,18 @@ import { toast } from "sonner";
 import UsersTable from "../../../components/UsersTable";
 import EditUserModal from "../../../components/EditUserModal";
 import CreateUserModal from "../../../components/CreateUserModal";
-import { useGetUsersQuery } from "../../../features/users/usersApi";
+import {
+  useGetUsersQuery,
+  useCreateUserMutation,
+  useUpdateUserMutation,
+} from "../../../features/users/usersApi";
 import { filterUsersByRole } from "../../../features/users/userRoles";
 import type { ApiUser } from "../../../features/users/usersApi";
 
 export default function SupervisorUsers() {
   const { data, isLoading, isFetching, error, refetch } = useGetUsersQuery();
+  const [createUser] = useCreateUserMutation();
+  const [updateUser] = useUpdateUserMutation();
   const users = filterUsersByRole(data ?? [], "user");
 
   const errorMessage =
@@ -39,10 +45,27 @@ export default function SupervisorUsers() {
   };
 
   const handleSaveUser = async (userId: string, updates: Partial<ApiUser>) => {
-    // TODO: Implement user update API call
-    console.log("Saving user:", userId, updates);
-    // For now, just refresh the data
-    await refetch();
+    try {
+      await updateUser({
+        id: userId,
+        name: updates.name,
+        location: updates.location,
+        role:
+          (updates.app_metadata?.role as string) ||
+          (updates.user_metadata?.role as string),
+      }).unwrap();
+      toast.success("User updated successfully");
+      await refetch();
+    } catch (error) {
+      const message =
+        error && typeof error === "object" && "error" in error
+          ? String(
+              (error as { error?: unknown }).error ?? "Failed to update user"
+            )
+          : "Failed to update user";
+      toast.error(message);
+      throw error;
+    }
   };
 
   const handleCreateNewUser = async (userData: {
@@ -52,10 +75,20 @@ export default function SupervisorUsers() {
     role: string;
     password: string;
   }) => {
-    // TODO: Implement user creation API call
-    console.log("Creating user:", userData);
-    // For now, just refresh the data
-    await refetch();
+    try {
+      await createUser(userData).unwrap();
+      toast.success("User created successfully");
+      await refetch();
+    } catch (error) {
+      const message =
+        error && typeof error === "object" && "error" in error
+          ? String(
+              (error as { error?: unknown }).error ?? "Failed to create user"
+            )
+          : "Failed to create user";
+      toast.error(message);
+      throw error;
+    }
   };
 
   return (

@@ -23,6 +23,8 @@ const EditUserModal = ({
     email: "",
     location: "",
     role: "",
+    email_verified: false,
+    phone_verified: false,
   });
   const [isLoading, setIsLoading] = useState(false);
 
@@ -45,6 +47,8 @@ const EditUserModal = ({
         email: user.email || "",
         location: user.location || "",
         role: typeof role === "string" ? role : "",
+        email_verified: user.email_verified || false,
+        phone_verified: user.phone_verified || false,
       });
     }
   }, [user, isOpen]);
@@ -62,6 +66,8 @@ const EditUserModal = ({
         user_metadata: {
           ...user.user_metadata,
           role: formData.role || undefined,
+          email_verified: formData.email_verified,
+          phone_verified: formData.phone_verified,
         },
       };
 
@@ -76,7 +82,7 @@ const EditUserModal = ({
     }
   };
 
-  const handleInputChange = (field: string, value: string) => {
+  const handleInputChange = (field: string, value: string | boolean) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
@@ -139,6 +145,36 @@ const EditUserModal = ({
               <option value="handyman">Handyman</option>
               <option value="user">User</option>
             </select>
+          </div>
+
+          <div className="sm:col-span-1">
+            <label className="mb-1 block text-sm font-medium text-(--color-text)">
+              Email Verified
+            </label>
+            <div className="flex items-center">
+              <input
+                type="checkbox"
+                checked={formData.email_verified}
+                onChange={(e) => handleInputChange("email_verified", e.target.checked)}
+                className="h-4 w-4 rounded border-(--color-border) text-(--color-accent) focus:ring-(--color-accent)"
+              />
+              <span className="ml-2 text-sm text-(--color-text)">Email is verified</span>
+            </div>
+          </div>
+
+          <div className="sm:col-span-1">
+            <label className="mb-1 block text-sm font-medium text-(--color-text)">
+              Phone Verified
+            </label>
+            <div className="flex items-center">
+              <input
+                type="checkbox"
+                checked={formData.phone_verified}
+                onChange={(e) => handleInputChange("phone_verified", e.target.checked)}
+                className="h-4 w-4 rounded border-(--color-border) text-(--color-accent) focus:ring-(--color-accent)"
+              />
+              <span className="ml-2 text-sm text-(--color-text)">Phone is verified</span>
+            </div>
           </div>
         </div>
 
