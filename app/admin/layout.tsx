@@ -37,9 +37,9 @@ export default function AdminLayout({
   if (!isAllowed || authRole !== "admin") return null;
 
   return (
-    <div className="flex min-h-screen bg-[var(--color-bg)] text-[var(--color-text)]">
+    <div className="flex min-h-screen bg-(--color-bg) text-(--color-text)">
       <AdminSidebar />
-      <main className="flex-1 bg-[var(--color-bg)] p-6">
+      <main className="flex-1 bg-(--color-bg) p-6">
         <AppHeader title="Admin" />
         {children}
       </main>

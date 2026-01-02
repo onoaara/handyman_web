@@ -37,9 +37,9 @@ export default function SupervisorLayout({
   if (!isAllowed || authRole !== "supervisor") return null;
 
   return (
-    <div className="flex min-h-screen bg-[var(--color-bg)] text-[var(--color-text)]">
+    <div className="flex min-h-screen bg-(--color-bg) text-(--color-text)">
       <SupervisorSidebar />
-      <main className="flex-1 bg-[var(--color-bg)] p-6">
+      <main className="flex-1 bg-(--color-bg) p-6">
         <AppHeader title="Supervisor" />
         {children}
       </main>

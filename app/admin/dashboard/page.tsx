@@ -8,20 +8,20 @@ export default function AdminDashboard() {
   return (
     <div className="space-y-6">
       {/* Welcome Section */}
-      <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
+      <div className="rounded-xl border border-(--color-border) bg-(--color-surface) p-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-[var(--color-text)]">
+            <h1 className="text-3xl font-bold text-(--color-text)">
               Welcome back, Admin!
             </h1>
-            <p className="mt-2 text-[var(--color-text-muted)]">
+            <p className="mt-2 text-(--color-text-muted)">
               Here's what's happening with your handyman management system
               today.
             </p>
           </div>
           <div className="hidden md:block">
-            <div className="h-16 w-16 rounded-full bg-[var(--color-accent)] flex items-center justify-center">
-              <span className="text-2xl font-bold text-[var(--color-on-accent)]">
+            <div className="h-16 w-16 rounded-full bg-(--color-accent) flex items-center justify-center">
+              <span className="text-2xl font-bold text-(--color-on-accent)">
                 {user?.email?.charAt(0).toUpperCase() || "A"}
               </span>
             </div>
@@ -31,7 +31,7 @@ export default function AdminDashboard() {
 
       {/* Stats Grid */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-        <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
+        <div className="rounded-xl border border-(--color-border) bg-(--color-surface) p-6">
           <div className="flex items-center">
             <div className="h-12 w-12 rounded-lg bg-blue-100 dark:bg-blue-900 flex items-center justify-center">
               <svg
@@ -49,17 +49,15 @@ export default function AdminDashboard() {
               </svg>
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-[var(--color-text-muted)]">
+              <p className="text-sm font-medium text-(--color-text-muted)">
                 Total Users
               </p>
-              <p className="text-2xl font-bold text-[var(--color-text)]">
-                1,234
-              </p>
+              <p className="text-2xl font-bold text-(--color-text)">1,234</p>
             </div>
           </div>
         </div>
 
-        <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
+        <div className="rounded-xl border border-(--color-border) bg-(--color-surface) p-6">
           <div className="flex items-center">
             <div className="h-12 w-12 rounded-lg bg-green-100 dark:bg-green-900 flex items-center justify-center">
               <svg
@@ -77,15 +75,15 @@ export default function AdminDashboard() {
               </svg>
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-[var(--color-text-muted)]">
+              <p className="text-sm font-medium text-(--color-text-muted)">
                 Active Services
               </p>
-              <p className="text-2xl font-bold text-[var(--color-text)]">89</p>
+              <p className="text-2xl font-bold text-(--color-text)">89</p>
             </div>
           </div>
         </div>
 
-        <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
+        <div className="rounded-xl border border-(--color-border) bg-(--color-surface) p-6">
           <div className="flex items-center">
             <div className="h-12 w-12 rounded-lg bg-yellow-100 dark:bg-yellow-900 flex items-center justify-center">
               <svg
@@ -103,15 +101,15 @@ export default function AdminDashboard() {
               </svg>
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-[var(--color-text-muted)]">
+              <p className="text-sm font-medium text-(--color-text-muted)">
                 Pending Requests
               </p>
-              <p className="text-2xl font-bold text-[var(--color-text)]">23</p>
+              <p className="text-2xl font-bold text-(--color-text)">23</p>
             </div>
           </div>
         </div>
 
-        <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
+        <div className="rounded-xl border border-(--color-border) bg-(--color-surface) p-6">
           <div className="flex items-center">
             <div className="h-12 w-12 rounded-lg bg-purple-100 dark:bg-purple-900 flex items-center justify-center">
               <svg
@@ -129,12 +127,10 @@ export default function AdminDashboard() {
               </svg>
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-[var(--color-text-muted)]">
+              <p className="text-sm font-medium text-(--color-text-muted)">
                 This Month
               </p>
-              <p className="text-2xl font-bold text-[var(--color-text)]">
-                +12%
-              </p>
+              <p className="text-2xl font-bold text-(--color-text)">+12%</p>
             </div>
           </div>
         </div>
@@ -143,25 +139,23 @@ export default function AdminDashboard() {
       {/* Recent Activity & Quick Actions */}
       <div className="grid gap-6 lg:grid-cols-2">
         {/* Recent Activity */}
-        <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
-          <h2 className="text-xl font-semibold text-[var(--color-text)] mb-4">
+        <div className="rounded-xl border border-(--color-border) bg-(--color-surface) p-6">
+          <h2 className="text-xl font-semibold text-(--color-text) mb-4">
             Recent Activity
           </h2>
           <div className="space-y-4">
             <div className="flex items-center space-x-3">
-              <div className="h-8 w-8 rounded-full bg-[var(--color-accent)] flex items-center justify-center">
-                <span className="text-sm font-medium text-[var(--color-on-accent)]">
+              <div className="h-8 w-8 rounded-full bg-(--color-accent) flex items-center justify-center">
+                <span className="text-sm font-medium text-(--color-on-accent)">
                   JD
                 </span>
               </div>
               <div className="flex-1">
-                <p className="text-sm text-[var(--color-text)]">
+                <p className="text-sm text-(--color-text)">
                   <span className="font-medium">John Doe</span> completed a
                   plumbing service
                 </p>
-                <p className="text-xs text-[var(--color-text-muted)]">
-                  2 hours ago
-                </p>
+                <p className="text-xs text-(--color-text-muted)">2 hours ago</p>
               </div>
             </div>
 
@@ -170,13 +164,11 @@ export default function AdminDashboard() {
                 <span className="text-sm font-medium text-white">AS</span>
               </div>
               <div className="flex-1">
-                <p className="text-sm text-[var(--color-text)]">
+                <p className="text-sm text-(--color-text)">
                   <span className="font-medium">Alice Smith</span> registered as
                   a new handyman
                 </p>
-                <p className="text-xs text-[var(--color-text-muted)]">
-                  4 hours ago
-                </p>
+                <p className="text-xs text-(--color-text-muted)">4 hours ago</p>
               </div>
             </div>
 
@@ -185,28 +177,26 @@ export default function AdminDashboard() {
                 <span className="text-sm font-medium text-white">MR</span>
               </div>
               <div className="flex-1">
-                <p className="text-sm text-[var(--color-text)]">
+                <p className="text-sm text-(--color-text)">
                   <span className="font-medium">Mike Ross</span> submitted a
                   service request
                 </p>
-                <p className="text-xs text-[var(--color-text-muted)]">
-                  6 hours ago
-                </p>
+                <p className="text-xs text-(--color-text-muted)">6 hours ago</p>
               </div>
             </div>
           </div>
         </div>
 
         {/* Quick Actions */}
-        <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
-          <h2 className="text-xl font-semibold text-[var(--color-text)] mb-4">
+        <div className="rounded-xl border border-(--color-border) bg-(--color-surface) p-6">
+          <h2 className="text-xl font-semibold text-(--color-text) mb-4">
             Quick Actions
           </h2>
           <div className="grid gap-3">
-            <button className="flex items-center space-x-3 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-4 text-left hover:bg-[var(--color-surface)] transition-colors">
-              <div className="h-10 w-10 rounded-lg bg-[var(--color-accent)] flex items-center justify-center">
+            <button className="flex items-center space-x-3 rounded-lg border border-(--color-border) bg-(--color-bg) p-4 text-left hover:bg-(--color-surface) transition-colors">
+              <div className="h-10 w-10 rounded-lg bg-(--color-accent) flex items-center justify-center">
                 <svg
-                  className="h-5 w-5 text-[var(--color-on-accent)]"
+                  className="h-5 w-5 text-(--color-on-accent)"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -220,16 +210,14 @@ export default function AdminDashboard() {
                 </svg>
               </div>
               <div>
-                <p className="font-medium text-[var(--color-text)]">
-                  Add New User
-                </p>
-                <p className="text-sm text-[var(--color-text-muted)]">
+                <p className="font-medium text-(--color-text)">Add New User</p>
+                <p className="text-sm text-(--color-text-muted)">
                   Create a new user account
                 </p>
               </div>
             </button>
 
-            <button className="flex items-center space-x-3 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-4 text-left hover:bg-[var(--color-surface)] transition-colors">
+            <button className="flex items-center space-x-3 rounded-lg border border-(--color-border) bg-(--color-bg) p-4 text-left hover:bg-(--color-surface) transition-colors">
               <div className="h-10 w-10 rounded-lg bg-green-500 flex items-center justify-center">
                 <svg
                   className="h-5 w-5 text-white"
@@ -246,16 +234,14 @@ export default function AdminDashboard() {
                 </svg>
               </div>
               <div>
-                <p className="font-medium text-[var(--color-text)]">
-                  View Reports
-                </p>
-                <p className="text-sm text-[var(--color-text-muted)]">
+                <p className="font-medium text-(--color-text)">View Reports</p>
+                <p className="text-sm text-(--color-text-muted)">
                   Check system analytics
                 </p>
               </div>
             </button>
 
-            <button className="flex items-center space-x-3 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-4 text-left hover:bg-[var(--color-surface)] transition-colors">
+            <button className="flex items-center space-x-3 rounded-lg border border-(--color-border) bg-(--color-bg) p-4 text-left hover:bg-(--color-surface) transition-colors">
               <div className="h-10 w-10 rounded-lg bg-blue-500 flex items-center justify-center">
                 <svg
                   className="h-5 w-5 text-white"
@@ -278,10 +264,10 @@ export default function AdminDashboard() {
                 </svg>
               </div>
               <div>
-                <p className="font-medium text-[var(--color-text)]">
+                <p className="font-medium text-(--color-text)">
                   System Settings
                 </p>
-                <p className="text-sm text-[var(--color-text-muted)]">
+                <p className="text-sm text-(--color-text-muted)">
                   Configure system preferences
                 </p>
               </div>
