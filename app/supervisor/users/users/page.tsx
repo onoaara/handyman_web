@@ -48,11 +48,13 @@ export default function SupervisorUsers() {
     try {
       await updateUser({
         id: userId,
-        name: updates.name,
-        location: updates.location,
-        role:
-          (updates.app_metadata?.role as string) ||
-          (updates.user_metadata?.role as string),
+        updates: {
+          name: updates.name,
+          location: updates.location,
+          role:
+            (updates.app_metadata?.role as string) ||
+            (updates.user_metadata?.role as string),
+        },
       }).unwrap();
       toast.success("User updated successfully");
       await refetch();

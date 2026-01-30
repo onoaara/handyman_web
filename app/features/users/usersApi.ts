@@ -61,7 +61,7 @@ export const usersApi = createApi({
     }),
     updateUser: builder.mutation<
       ApiUser,
-      { id: string; updates: Partial<ApiUser> }
+      { id: string; updates: Partial<ApiUser> & { role?: string } }
     >({
       query: ({ id, updates }) => ({
         url: `/users/${id}`,

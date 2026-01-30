@@ -6,8 +6,9 @@ import {
 
 export async function PATCH(
   request: Request,
-  { params }: { params: { id: string } }
+  props: { params: Promise<{ id: string }> }
 ) {
+  const params = await props.params;
   try {
     validateSupabaseAdminConfig();
     const { id } = params;
