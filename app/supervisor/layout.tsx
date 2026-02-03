@@ -2,12 +2,12 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useAppSelector } from "../hooks";
+import { useAppSelector } from "../redux/hooks";
 import {
   selectAuthInitialized,
   selectAuthRole,
   selectIsAllowedAuthenticated,
-} from "../features/auth/authSlice";
+} from "../redux/slices/authSlice";
 import SupervisorSidebar from "../components/SupervisorSidebar";
 import AppHeader from "../components/AppHeader";
 

@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 import { Provider } from "react-redux";
 import { Toaster } from "sonner";
-import { store } from "./store";
-import { initializeAuth } from "./features/auth/authSlice";
-import { selectThemeMode } from "./features/theme/themeSlice";
+import { store } from "./redux/store";
+import { initializeAuth } from "./redux/slices/authSlice";
+import { selectThemeMode } from "./redux/slices/themeSlice";
 
 function AuthInitializer() {
   useEffect(() => {

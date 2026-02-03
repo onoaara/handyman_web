@@ -1,6 +1,7 @@
 "use client";
 
-import { useAppSelector } from "../../hooks";
+import Button from "@/app/components/ui/Button";
+import { useAppSelector } from "../../redux/hooks";
 
 export default function AdminDashboard() {
   const user = useAppSelector((state) => state.auth.user);
@@ -8,7 +9,7 @@ export default function AdminDashboard() {
   return (
     <div className="space-y-6">
       {/* Welcome Section */}
-      <div className="rounded-xl border border-(--color-border) bg-(--color-surface) p-6">
+      <div className="rounded border border-(--color-border) bg-(--color-surface) p-6">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold text-(--color-text)">
@@ -20,7 +21,7 @@ export default function AdminDashboard() {
             </p>
           </div>
           <div className="hidden md:block">
-            <div className="h-16 w-16 rounded-full bg-(--color-accent) flex items-center justify-center">
+            <div className="h-16 w-16 rounded bg-(--color-accent) flex items-center justify-center">
               <span className="text-2xl font-bold text-(--color-on-accent)">
                 {user?.email?.charAt(0).toUpperCase() || "A"}
               </span>
@@ -31,9 +32,9 @@ export default function AdminDashboard() {
 
       {/* Stats Grid */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-        <div className="rounded-xl border border-(--color-border) bg-(--color-surface) p-6">
+        <div className="rounded border border-(--color-border) bg-(--color-surface) p-6">
           <div className="flex items-center">
-            <div className="h-12 w-12 rounded-lg bg-blue-100 dark:bg-blue-900 flex items-center justify-center">
+            <div className="h-12 w-12 rounded bg-blue-100 dark:bg-blue-900 flex items-center justify-center">
               <svg
                 className="h-6 w-6 text-blue-600 dark:text-blue-400"
                 fill="none"
@@ -57,9 +58,9 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        <div className="rounded-xl border border-(--color-border) bg-(--color-surface) p-6">
+        <div className="rounded border border-(--color-border) bg-(--color-surface) p-6">
           <div className="flex items-center">
-            <div className="h-12 w-12 rounded-lg bg-green-100 dark:bg-green-900 flex items-center justify-center">
+            <div className="h-12 w-12 rounded bg-green-100 dark:bg-green-900 flex items-center justify-center">
               <svg
                 className="h-6 w-6 text-green-600 dark:text-green-400"
                 fill="none"
@@ -83,9 +84,9 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        <div className="rounded-xl border border-(--color-border) bg-(--color-surface) p-6">
+        <div className="rounded border border-(--color-border) bg-(--color-surface) p-6">
           <div className="flex items-center">
-            <div className="h-12 w-12 rounded-lg bg-yellow-100 dark:bg-yellow-900 flex items-center justify-center">
+            <div className="h-12 w-12 rounded bg-yellow-100 dark:bg-yellow-900 flex items-center justify-center">
               <svg
                 className="h-6 w-6 text-yellow-600 dark:text-yellow-400"
                 fill="none"
@@ -109,9 +110,9 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        <div className="rounded-xl border border-(--color-border) bg-(--color-surface) p-6">
+        <div className="rounded border border-(--color-border) bg-(--color-surface) p-6">
           <div className="flex items-center">
-            <div className="h-12 w-12 rounded-lg bg-purple-100 dark:bg-purple-900 flex items-center justify-center">
+            <div className="h-12 w-12 rounded bg-purple-100 dark:bg-purple-900 flex items-center justify-center">
               <svg
                 className="h-6 w-6 text-purple-600 dark:text-purple-400"
                 fill="none"
@@ -139,7 +140,7 @@ export default function AdminDashboard() {
       {/* Recent Activity & Quick Actions */}
       <div className="grid gap-6 lg:grid-cols-2">
         {/* Recent Activity */}
-        <div className="rounded-xl border border-(--color-border) bg-(--color-surface) p-6">
+        <div className="rounded border border-(--color-border) bg-(--color-surface) p-6">
           <h2 className="text-xl font-semibold text-(--color-text) mb-4">
             Recent Activity
           </h2>
@@ -188,13 +189,16 @@ export default function AdminDashboard() {
         </div>
 
         {/* Quick Actions */}
-        <div className="rounded-xl border border-(--color-border) bg-(--color-surface) p-6">
+        <div className="rounded border border-(--color-border) bg-(--color-surface) p-6">
           <h2 className="text-xl font-semibold text-(--color-text) mb-4">
             Quick Actions
           </h2>
           <div className="grid gap-3">
-            <button className="flex items-center space-x-3 rounded-lg border border-(--color-border) bg-(--color-bg) p-4 text-left hover:bg-(--color-surface) transition-colors">
-              <div className="h-10 w-10 rounded-lg bg-(--color-accent) flex items-center justify-center">
+            <Button
+              variant="outline"
+              className="flex h-auto w-full items-center justify-start space-x-3 p-4 text-left"
+            >
+              <div className="h-10 w-10 rounded bg-(--color-accent) flex items-center justify-center">
                 <svg
                   className="h-5 w-5 text-(--color-on-accent)"
                   fill="none"
@@ -215,10 +219,13 @@ export default function AdminDashboard() {
                   Create a new user account
                 </p>
               </div>
-            </button>
+            </Button>
 
-            <button className="flex items-center space-x-3 rounded-lg border border-(--color-border) bg-(--color-bg) p-4 text-left hover:bg-(--color-surface) transition-colors">
-              <div className="h-10 w-10 rounded-lg bg-green-500 flex items-center justify-center">
+            <Button
+              variant="outline"
+              className="flex h-auto w-full items-center justify-start space-x-3 p-4 text-left"
+            >
+              <div className="h-10 w-10 rounded bg-green-500 flex items-center justify-center">
                 <svg
                   className="h-5 w-5 text-white"
                   fill="none"
@@ -239,10 +246,13 @@ export default function AdminDashboard() {
                   Check system analytics
                 </p>
               </div>
-            </button>
+            </Button>
 
-            <button className="flex items-center space-x-3 rounded-lg border border-(--color-border) bg-(--color-bg) p-4 text-left hover:bg-(--color-surface) transition-colors">
-              <div className="h-10 w-10 rounded-lg bg-blue-500 flex items-center justify-center">
+            <Button
+              variant="outline"
+              className="flex h-auto w-full items-center justify-start space-x-3 p-4 text-left"
+            >
+              <div className="h-10 w-10 rounded bg-blue-500 flex items-center justify-center">
                 <svg
                   className="h-5 w-5 text-white"
                   fill="none"
@@ -271,7 +281,7 @@ export default function AdminDashboard() {
                   Configure system preferences
                 </p>
               </div>
-            </button>
+            </Button>
           </div>
         </div>
       </div>

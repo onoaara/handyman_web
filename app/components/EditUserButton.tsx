@@ -1,6 +1,7 @@
 "use client";
 
-import type { ApiUser } from "../features/users/usersApi";
+import type { ApiUser } from "../redux/api/usersApi";
+import Button from "./ui/Button";
 
 type EditUserButtonProps = {
   user: ApiUser;
@@ -15,14 +16,15 @@ const EditUserButton = ({ user, onEdit }: EditUserButtonProps) => {
   };
 
   return (
-    <button
+    <Button
       type="button"
       onClick={handleEdit}
-      className="rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-1 text-sm text-[var(--color-text)] hover:opacity-90 disabled:opacity-60"
+      variant="outline"
+      className="px-3 py-1 text-sm"
       disabled={!onEdit}
     >
       Edit
-    </button>
+    </Button>
   );
 };
 

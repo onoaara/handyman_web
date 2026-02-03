@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { toast } from "sonner";
 import Modal from "./Modal";
+import Button from "./ui/Button";
 
 type CreateUserModalProps = {
   isOpen: boolean;
@@ -89,7 +90,7 @@ const CreateUserModal = ({
               type="text"
               value={formData.name}
               onChange={(e) => handleInputChange("name", e.target.value)}
-              className="w-full rounded-lg border border-(--color-border) bg-(--color-bg) px-3 py-2 text-sm text-(--color-text) outline-none focus:border-(--color-accent)"
+              className="w-full rounded border border-(--color-border) bg-(--color-bg) px-3 py-2 text-sm text-(--color-text) outline-none focus:border-(--color-accent)"
               placeholder="Enter full name"
               required
             />
@@ -103,7 +104,7 @@ const CreateUserModal = ({
               type="email"
               value={formData.email}
               onChange={(e) => handleInputChange("email", e.target.value)}
-              className="w-full rounded-lg border border-(--color-border) bg-(--color-bg) px-3 py-2 text-sm text-(--color-text) outline-none focus:border-(--color-accent)"
+              className="w-full rounded border border-(--color-border) bg-(--color-bg) px-3 py-2 text-sm text-(--color-text) outline-none focus:border-(--color-accent)"
               placeholder="Enter email address"
               required
             />
@@ -117,7 +118,7 @@ const CreateUserModal = ({
               type="text"
               value={formData.location}
               onChange={(e) => handleInputChange("location", e.target.value)}
-              className="w-full rounded-lg border border-(--color-border) bg-(--color-bg) px-3 py-2 text-sm text-(--color-text) outline-none focus:border-(--color-accent)"
+              className="w-full rounded border border-(--color-border) bg-(--color-bg) px-3 py-2 text-sm text-(--color-text) outline-none focus:border-(--color-accent)"
               placeholder="Enter location"
             />
           </div>
@@ -129,7 +130,7 @@ const CreateUserModal = ({
             <select
               value={formData.role}
               onChange={(e) => handleInputChange("role", e.target.value)}
-              className="w-full rounded-lg border border-(--color-border) bg-(--color-bg) px-3 py-2 text-sm text-(--color-text) outline-none focus:border-(--color-accent)"
+              className="w-full rounded border border-(--color-border) bg-(--color-bg) px-3 py-2 text-sm text-(--color-text) outline-none focus:border-(--color-accent)"
               required
             >
               <option value="">Select role</option>
@@ -148,7 +149,7 @@ const CreateUserModal = ({
               type="password"
               value={formData.password}
               onChange={(e) => handleInputChange("password", e.target.value)}
-              className="w-full rounded-lg border border-(--color-border) bg-(--color-bg) px-3 py-2 text-sm text-(--color-text) outline-none focus:border-(--color-accent)"
+              className="w-full rounded border border-(--color-border) bg-(--color-bg) px-3 py-2 text-sm text-(--color-text) outline-none focus:border-(--color-accent)"
               placeholder="Enter password (min 6 characters)"
               required
               minLength={6}
@@ -165,7 +166,7 @@ const CreateUserModal = ({
               onChange={(e) =>
                 handleInputChange("confirmPassword", e.target.value)
               }
-              className="w-full rounded-lg border border-(--color-border) bg-(--color-bg) px-3 py-2 text-sm text-(--color-text) outline-none focus:border-(--color-accent)"
+              className="w-full rounded border border-(--color-border) bg-(--color-bg) px-3 py-2 text-sm text-(--color-text) outline-none focus:border-(--color-accent)"
               placeholder="Confirm password"
               required
               minLength={6}
@@ -174,21 +175,17 @@ const CreateUserModal = ({
         </div>
 
         <div className="mt-6 flex items-center justify-end gap-3">
-          <button
+          <Button
             type="button"
+            variant="outline"
             onClick={onClose}
             disabled={isLoading}
-            className="rounded-lg border border-(--color-border) bg-(--color-bg) px-4 py-2 text-sm font-medium text-(--color-text) hover:opacity-90 disabled:opacity-60"
           >
             Cancel
-          </button>
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="rounded-lg bg-(--color-accent) px-4 py-2 text-sm font-medium text-(--color-on-accent) hover:opacity-90 disabled:opacity-60"
-          >
+          </Button>
+          <Button type="submit" variant="primary" disabled={isLoading}>
             {isLoading ? "Creating..." : "Create User"}
-          </button>
+          </Button>
         </div>
       </form>
     </Modal>

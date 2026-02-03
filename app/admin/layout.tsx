@@ -2,14 +2,13 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useAppSelector } from "../hooks";
+import { useAppSelector } from "../redux/hooks";
 import {
   selectAuthInitialized,
   selectAuthRole,
   selectIsAllowedAuthenticated,
-} from "../features/auth/authSlice";
-import AdminSidebar from "../components/AdminSidebar";
-import AppHeader from "../components/AppHeader";
+} from "../redux/slices/authSlice";
+import NewProvider from "./providers";
 
 export default function AdminLayout({
   children,
@@ -37,12 +36,12 @@ export default function AdminLayout({
   if (!isAllowed || authRole !== "admin") return null;
 
   return (
-    <div className="flex min-h-screen bg-(--color-bg) text-(--color-text)">
-      <AdminSidebar />
-      <main className="flex-1 bg-(--color-bg) p-6">
-        <AppHeader title="Admin" />
-        {children}
-      </main>
-    </div>
+    <NewProvider>
+      <div id="page-wrapper" className="bg-(--color-bg) text-(--color-text)">
+        <div id="main" className="bg-(--color-bg)">
+          {children}
+        </div>
+      </div>
+    </NewProvider>
   );
 }

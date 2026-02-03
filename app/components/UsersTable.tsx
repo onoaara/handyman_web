@@ -1,8 +1,10 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
-import type { ApiUser } from "../features/users/usersApi";
+import type { ApiUser } from "../redux/api/usersApi";
 import EditUserButton from "./EditUserButton";
+import DataTable, { Column } from "./DataTable";
+import Button from "./ui/Button";
 
 type UsersTableProps = {
   title: string;
@@ -76,135 +78,94 @@ const UsersTable = ({
     [users, startIndex, endIndex],
   );
 
-  return (
-    <div className="overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)]">
-      <div className="flex items-center justify-between border-b border-[var(--color-border)] px-4 py-3">
-        <span className="text-sm font-semibold text-[var(--color-text)]">
-          {title}
+  const columns: Column<ApiUser>[] = [
+    {
+      key: "name",
+      header: "Name",
+      render: (value) => (value as string) || "—",
+    },
+    {
+      key: "email",
+      header: "Email",
+      render: (value) => (typeof value === "string" ? value : "—"),
+    },
+    {
+      key: "location",
+      header: "Location",
+      render: (value) => (value as string) || "—",
+    },
+    {
+      key: "role",
+      header: "Role",
+      render: (_, user) => getPrimaryRole(user) ?? "—",
+    },
+    {
+      key: "email_verified",
+      header: "Email Verified",
+      render: (value) =>
+        value === true ? (
+          <span className="text-green-600 dark:text-green-400">✓ Yes</span>
+        ) : value === false ? (
+          <span className="text-red-600 dark:text-red-400">✗ No</span>
+        ) : (
+          "—"
+        ),
+    },
+    {
+      key: "phone_verified",
+      header: "Phone Verified",
+      render: (value) =>
+        value === true ? (
+          <span className="text-green-600 dark:text-green-400">✓ Yes</span>
+        ) : value === false ? (
+          <span className="text-red-600 dark:text-red-400">✗ No</span>
+        ) : (
+          "—"
+        ),
+    },
+    {
+      key: "last_sign_in_at",
+      header: "Last Sign In",
+      render: (value) => formatDateTime(value),
+    },
+    {
+      key: "created_at",
+      header: "Created",
+      render: (value) => formatDateTime(value),
+    },
+    {
+      key: "id",
+      header: "ID",
+      render: (value) => (
+        <span className="font-mono text-xs text-(--color-text-muted)">
+          {typeof value === "string" ? value : "—"}
         </span>
-        <div className="flex items-center gap-2">
-          {onCreate && (
-            <button
-              type="button"
-              onClick={onCreate}
-              className="rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-2 text-sm text-[var(--color-text)] hover:opacity-90"
-            >
-              Create
-            </button>
-          )}
-          <span className="text-sm text-[var(--color-text-muted)]">
-            {users.length} total
-            {totalPages > 1 && ` • Page ${validPage} of ${totalPages}`}
-          </span>
-        </div>
-      </div>
+      ),
+    },
+    {
+      key: "actions",
+      header: "Actions",
+      render: (_, user) => <EditUserButton user={user} onEdit={onEdit} />,
+    },
+  ];
 
-      <div className="overflow-x-auto">
-        <table className="w-full border-collapse text-left text-sm">
-          <thead className="bg-[var(--color-bg)] text-[var(--color-text)]">
-            <tr>
-              <th className="px-4 py-3 font-semibold">Name</th>
-              <th className="px-4 py-3 font-semibold">Email</th>
-              <th className="px-4 py-3 font-semibold">Location</th>
-              <th className="px-4 py-3 font-semibold">Role</th>
-              <th className="px-4 py-3 font-semibold">Email Verified</th>
-              <th className="px-4 py-3 font-semibold">Phone Verified</th>
-              <th className="px-4 py-3 font-semibold">Last Sign In</th>
-              <th className="px-4 py-3 font-semibold">Created</th>
-              <th className="px-4 py-3 font-semibold">ID</th>
-              <th className="px-4 py-3 font-semibold">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {paginatedUsers.map((u, idx) => (
-              <tr
-                key={u.id ?? u.email ?? String(idx)}
-                className="border-t border-[var(--color-border)]"
-              >
-                <td className="px-4 py-3 text-[var(--color-text)]">
-                  {u.name || "—"}
-                </td>
-                <td className="px-4 py-3 text-[var(--color-text)]">
-                  {typeof u.email === "string" ? u.email : "—"}
-                </td>
-                <td className="px-4 py-3 text-[var(--color-text-muted)]">
-                  {u.location || "—"}
-                </td>
-                <td className="px-4 py-3 text-[var(--color-text-muted)]">
-                  {getPrimaryRole(u) ?? "—"}
-                </td>
-                <td className="px-4 py-3 text-[var(--color-text-muted)]">
-                  {u.email_verified === true ? (
-                    <span className="text-green-600">✓ Yes</span>
-                  ) : u.email_verified === false ? (
-                    <span className="text-red-600">✗ No</span>
-                  ) : (
-                    "—"
-                  )}
-                </td>
-                <td className="px-4 py-3 text-[var(--color-text-muted)]">
-                  {u.phone_verified === true ? (
-                    <span className="text-green-600">✓ Yes</span>
-                  ) : u.phone_verified === false ? (
-                    <span className="text-red-600">✗ No</span>
-                  ) : (
-                    "—"
-                  )}
-                </td>
-                <td className="px-4 py-3 text-[var(--color-text-muted)]">
-                  {formatDateTime(u.last_sign_in_at)}
-                </td>
-                <td className="px-4 py-3 text-[var(--color-text-muted)]">
-                  {formatDateTime(u.created_at)}
-                </td>
-                <td className="px-4 py-3 font-mono text-xs text-[var(--color-text-muted)]">
-                  {typeof u.id === "string" ? u.id : "—"}
-                </td>
-                <td className="px-4 py-3">
-                  <EditUserButton user={u} onEdit={onEdit} />
-                </td>
-              </tr>
-            ))}
-
-            {paginatedUsers.length === 0 ? (
-              <tr className="border-t border-[var(--color-border)]">
-                <td
-                  className="px-4 py-6 text-center text-[var(--color-text-muted)]"
-                  colSpan={10}
-                >
-                  No users found
-                </td>
-              </tr>
-            ) : null}
-          </tbody>
-        </table>
-      </div>
-
-      {totalPages > 1 && (
-        <div className="flex items-center justify-between border-t border-[var(--color-border)] px-4 py-3">
-          <button
-            type="button"
-            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-            disabled={validPage === 1}
-            className="rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-2 text-sm text-[var(--color-text)] hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
-          >
-            Previous
-          </button>
-          <span className="text-sm text-[var(--color-text-muted)]">
-            Showing {(validPage - 1) * itemsPerPage + 1}–
-            {Math.min(validPage * itemsPerPage, users.length)} of {users.length}
-          </span>
-          <button
-            type="button"
-            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-            disabled={validPage === totalPages}
-            className="rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-2 text-sm text-[var(--color-text)] hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
-          >
-            Next
-          </button>
-        </div>
-      )}
-    </div>
+  return (
+    <DataTable
+      title={title}
+      data={paginatedUsers}
+      columns={columns}
+      totalCount={users.length}
+      currentPage={validPage}
+      pageSize={itemsPerPage}
+      onPageChange={setCurrentPage}
+      actions={
+        onCreate && (
+          <Button onClick={onCreate} className="py-1.5! text-xs">
+            Create
+          </Button>
+        )
+      }
+    />
   );
 };
 

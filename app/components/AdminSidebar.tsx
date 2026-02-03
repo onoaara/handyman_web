@@ -7,7 +7,10 @@ export default function AdminSidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="w-64 border-r border-(--color-border) bg-(--color-surface) p-4">
+    <aside
+      id="side-nav"
+      className="w-64 border-r border-(--color-border) bg-(--color-surface) p-4"
+    >
       <h2 className="mb-6 text-lg font-semibold text-(--color-text)">
         Handyman Admin
       </h2>
@@ -15,7 +18,7 @@ export default function AdminSidebar() {
       <nav className="space-y-2">
         <Link
           href="/admin/dashboard"
-          className={`block rounded-lg px-4 py-2 text-sm transition-colors ${
+          className={`block rounded px-4 py-2 text-sm transition-colors ${
             pathname === "/admin/dashboard"
               ? "bg-(--color-accent) font-semibold text-(--color-on-accent)"
               : "text-(--color-text) hover:bg-(--color-bg) hover:text-(--color-text)"
@@ -25,7 +28,7 @@ export default function AdminSidebar() {
         </Link>
 
         <details className="group">
-          <summary className="flex cursor-pointer list-none items-center justify-between rounded-lg px-4 py-2 text-sm text-(--color-text) transition-colors hover:bg-(--color-bg)">
+          <summary className="flex cursor-pointer list-none items-center justify-between rounded px-4 py-2 text-sm text-(--color-text) transition-colors hover:bg-(--color-bg)">
             <span>Users</span>
 
             {/* Chevron */}
@@ -47,7 +50,7 @@ export default function AdminSidebar() {
           <div className="mt-2 ml-4 space-y-1">
             <Link
               href="/admin/users/handymen"
-              className={`block rounded-lg px-4 py-2 text-sm transition-colors ${
+              className={`block rounded px-4 py-2 text-sm transition-colors ${
                 pathname === "/admin/users/handymen"
                   ? "bg-(--color-accent) font-semibold text-(--color-on-accent)"
                   : "text-(--color-text) hover:bg-(--color-bg) hover:text-(--color-text)"
@@ -58,7 +61,7 @@ export default function AdminSidebar() {
 
             <Link
               href="/admin/users/users"
-              className={`block rounded-lg px-4 py-2 text-sm transition-colors ${
+              className={`block rounded px-4 py-2 text-sm transition-colors ${
                 pathname === "/admin/users/users"
                   ? "bg-(--color-accent) font-semibold text-(--color-on-accent)"
                   : "text-(--color-text) hover:bg-(--color-bg) hover:text-(--color-text)"
@@ -69,7 +72,7 @@ export default function AdminSidebar() {
 
             <Link
               href="/admin/users/supervisors"
-              className={`block rounded-lg px-4 py-2 text-sm transition-colors ${
+              className={`block rounded px-4 py-2 text-sm transition-colors ${
                 pathname === "/admin/users/supervisors"
                   ? "bg-(--color-accent) font-semibold text-(--color-on-accent)"
                   : "text-(--color-text) hover:bg-(--color-bg) hover:text-(--color-text)"
@@ -80,7 +83,7 @@ export default function AdminSidebar() {
 
             <Link
               href="/admin/users/all-users"
-              className={`block rounded-lg px-4 py-2 text-sm transition-colors ${
+              className={`block rounded px-4 py-2 text-sm transition-colors ${
                 pathname === "/admin/users/all-users"
                   ? "bg-(--color-accent) font-semibold text-(--color-on-accent)"
                   : "text-(--color-text) hover:bg-(--color-bg) hover:text-(--color-text)"
@@ -93,7 +96,7 @@ export default function AdminSidebar() {
 
         <Link
           href="/admin/services"
-          className={`block rounded-lg px-4 py-2 text-sm transition-colors ${
+          className={`block rounded px-4 py-2 text-sm transition-colors ${
             pathname === "/admin/services"
               ? "bg-(--color-accent) font-semibold text-(--color-on-accent)"
               : "text-(--color-text) hover:bg-(--color-bg) hover:text-(--color-text)"
@@ -104,7 +107,7 @@ export default function AdminSidebar() {
 
         <Link
           href="/admin/settings"
-          className={`block rounded-lg px-4 py-2 text-sm transition-colors ${
+          className={`block rounded px-4 py-2 text-sm transition-colors ${
             pathname === "/admin/settings"
               ? "bg-(--color-accent) font-semibold text-(--color-on-accent)"
               : "text-(--color-text) hover:bg-(--color-bg) hover:text-(--color-text)"

@@ -3,7 +3,8 @@
 import { useEffect } from "react";
 import { toast } from "sonner";
 import UsersTable from "../../../components/UsersTable";
-import { useGetUsersQuery } from "../../../features/users/usersApi";
+import { useGetUsersQuery } from "../../../redux/api/usersApi";
+import Button from "@/app/components/ui/Button";
 
 export default function AdminAllUsers() {
   const { data, isLoading, isFetching, error, refetch } = useGetUsersQuery();
@@ -13,8 +14,8 @@ export default function AdminAllUsers() {
     error && typeof error === "object" && "error" in error
       ? String((error as { error?: unknown }).error ?? "Failed to load users")
       : error
-      ? "Failed to load users"
-      : null;
+        ? "Failed to load users"
+        : null;
 
   const errorHint =
     error &&
@@ -40,7 +41,7 @@ export default function AdminAllUsers() {
         <p className="text-sm text-[var(--color-text-muted)]">
           {isLoading || isFetching ? "Loading..." : " "}
         </p>
-        <button
+        <Button
           type="button"
           onClick={async () => {
             try {
@@ -51,21 +52,21 @@ export default function AdminAllUsers() {
                 e && typeof e === "object" && "error" in e
                   ? String(
                       (e as { error?: unknown }).error ??
-                        "Failed to refresh users"
+                        "Failed to refresh users",
                     )
                   : "Failed to refresh users";
               toast.error(message);
             }
           }}
-          className="rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] px-3 py-2 text-sm text-[var(--color-text)] hover:opacity-90 disabled:opacity-60"
+          variant="outline"
           disabled={isLoading || isFetching}
         >
           Refresh
-        </button>
+        </Button>
       </div>
 
       {errorMessage ? (
-        <div className="mb-4 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-3 text-sm text-[var(--color-text)]">
+        <div className="mb-4 rounded border border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-3 text-sm text-[var(--color-text)]">
           <p className="font-medium text-[var(--color-accent)]">
             {errorMessage}
           </p>

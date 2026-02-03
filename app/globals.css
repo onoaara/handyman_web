@@ -1,30 +1,43 @@
 @import "tailwindcss";
+@import "../css/header.css";
+@import "../css/sideNav.css";
 
 :root {
+  /* User's new vars */
   --background: #ffffff;
   --foreground: #171717;
+
+  /* Existing vars to KEEP */
   --color-bg: #ffffff;
-  --color-surface: #ffffff;
-  --color-text: #164a41;
-  --color-text-muted: #4d774e;
-  --color-border: #9dc88d;
-  --color-accent: #f1b24a;
-  --color-on-accent: #164a41;
+  --color-surface: #f8fafc;
+  --color-text: #1e293b;
+  --color-text-muted: #64748b;
+  --color-border: #e2e8f0;
+  --color-accent: #3b82f6;
+  --color-on-accent: #ffffff;
+
+  /* Mapping user's accent-white to surface color to respect "current colors" in light mode */
+  --accent-white: var(--color-surface);
 }
 
 html[data-theme="dark"] {
-  --color-bg: #164a41;
-  --color-surface: #4d774e;
-  --color-text: #ffffff;
-  --color-text-muted: #9dc88d;
-  --color-border: #9dc88d;
-  --color-accent: #f1b24a;
-  --color-on-accent: #164a41;
+  --color-bg: #0f172a;
+  --color-surface: #1e293b;
+  --color-text: #f1f5f9;
+  --color-text-muted: #94a3b8;
+  --color-border: #334155;
+  --color-accent: #3b82f6;
+  --color-on-accent: #ffffff;
+
+  /* Mapping accent-white to surface in dark mode too */
+  --accent-white: var(--color-surface);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-primary: #517879;
+  --color-primaryLight: #b1ced1;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -42,7 +55,28 @@ body {
 }
 
 body {
-  background: var(--color-bg);
-  color: var(--color-text);
+  background: var(--background);
+  color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#page-wrapper {
+  display: grid;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  grid-template-columns: max-content 1fr;
+  grid-template-rows: 50px 1fr;
+  grid-template-areas:
+    "sidenav header"
+    "sidenav main";
+}
+
+#main {
+  grid-area: main;
+  min-width: 0;
+  overflow: auto;
 }

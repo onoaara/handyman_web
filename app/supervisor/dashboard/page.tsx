@@ -1,6 +1,7 @@
 "use client";
 
-import { useAppSelector } from "../../hooks";
+import { useAppSelector } from "../../redux/hooks";
+import Button from "../../components/ui/Button";
 
 export default function SupervisorDashboard() {
   const user = useAppSelector((state) => state.auth.user);
@@ -8,7 +9,7 @@ export default function SupervisorDashboard() {
   return (
     <div className="space-y-6">
       {/* Welcome Section */}
-      <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
+      <div className="rounded border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold text-[var(--color-text)]">
@@ -19,7 +20,7 @@ export default function SupervisorDashboard() {
             </p>
           </div>
           <div className="hidden md:block">
-            <div className="h-16 w-16 rounded-full bg-[var(--color-accent)] flex items-center justify-center">
+            <div className="h-16 w-16 rounded bg-[var(--color-accent)] flex items-center justify-center">
               <span className="text-2xl font-bold text-[var(--color-on-accent)]">
                 {user?.email?.charAt(0).toUpperCase() || "S"}
               </span>
@@ -30,9 +31,9 @@ export default function SupervisorDashboard() {
 
       {/* Stats Grid */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-        <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
+        <div className="rounded border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
           <div className="flex items-center">
-            <div className="h-12 w-12 rounded-lg bg-blue-100 dark:bg-blue-900 flex items-center justify-center">
+            <div className="h-12 w-12 rounded bg-blue-100 dark:bg-blue-900 flex items-center justify-center">
               <svg
                 className="h-6 w-6 text-blue-600 dark:text-blue-400"
                 fill="none"
@@ -56,9 +57,9 @@ export default function SupervisorDashboard() {
           </div>
         </div>
 
-        <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
+        <div className="rounded border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
           <div className="flex items-center">
-            <div className="h-12 w-12 rounded-lg bg-green-100 dark:bg-green-900 flex items-center justify-center">
+            <div className="h-12 w-12 rounded bg-green-100 dark:bg-green-900 flex items-center justify-center">
               <svg
                 className="h-6 w-6 text-green-600 dark:text-green-400"
                 fill="none"
@@ -82,9 +83,9 @@ export default function SupervisorDashboard() {
           </div>
         </div>
 
-        <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
+        <div className="rounded border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
           <div className="flex items-center">
-            <div className="h-12 w-12 rounded-lg bg-yellow-100 dark:bg-yellow-900 flex items-center justify-center">
+            <div className="h-12 w-12 rounded bg-yellow-100 dark:bg-yellow-900 flex items-center justify-center">
               <svg
                 className="h-6 w-6 text-yellow-600 dark:text-yellow-400"
                 fill="none"
@@ -108,9 +109,9 @@ export default function SupervisorDashboard() {
           </div>
         </div>
 
-        <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
+        <div className="rounded border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
           <div className="flex items-center">
-            <div className="h-12 w-12 rounded-lg bg-purple-100 dark:bg-purple-900 flex items-center justify-center">
+            <div className="h-12 w-12 rounded bg-purple-100 dark:bg-purple-900 flex items-center justify-center">
               <svg
                 className="h-6 w-6 text-purple-600 dark:text-purple-400"
                 fill="none"
@@ -138,14 +139,14 @@ export default function SupervisorDashboard() {
       {/* Team Performance & Quick Actions */}
       <div className="grid gap-6 lg:grid-cols-2">
         {/* Team Performance */}
-        <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
+        <div className="rounded border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
           <h2 className="text-xl font-semibold text-[var(--color-text)] mb-4">
             Team Performance
           </h2>
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
-                <div className="h-8 w-8 rounded-full bg-[var(--color-accent)] flex items-center justify-center">
+                <div className="h-8 w-8 rounded bg-[var(--color-accent)] flex items-center justify-center">
                   <span className="text-sm font-medium text-[var(--color-on-accent)]">
                     JD
                   </span>
@@ -171,7 +172,7 @@ export default function SupervisorDashboard() {
 
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
-                <div className="h-8 w-8 rounded-full bg-green-500 flex items-center justify-center">
+                <div className="h-8 w-8 rounded bg-green-500 flex items-center justify-center">
                   <span className="text-sm font-medium text-white">AS</span>
                 </div>
                 <div>
@@ -195,7 +196,7 @@ export default function SupervisorDashboard() {
 
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
-                <div className="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center">
+                <div className="h-8 w-8 rounded bg-blue-500 flex items-center justify-center">
                   <span className="text-sm font-medium text-white">MR</span>
                 </div>
                 <div>
@@ -220,13 +221,16 @@ export default function SupervisorDashboard() {
         </div>
 
         {/* Quick Actions */}
-        <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
+        <div className="rounded border border-[var(--color-border)] bg-[var(--color-surface)] p-6">
           <h2 className="text-xl font-semibold text-[var(--color-text)] mb-4">
             Quick Actions
           </h2>
           <div className="grid gap-3">
-            <button className="flex items-center space-x-3 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-4 text-left hover:bg-[var(--color-surface)] transition-colors">
-              <div className="h-10 w-10 rounded-lg bg-[var(--color-accent)] flex items-center justify-center">
+            <Button
+              variant="outline"
+              className="flex h-auto w-full items-center justify-start space-x-3 p-4 text-left"
+            >
+              <div className="h-10 w-10 rounded bg-[var(--color-accent)] flex items-center justify-center">
                 <svg
                   className="h-5 w-5 text-[var(--color-on-accent)]"
                   fill="none"
@@ -249,10 +253,13 @@ export default function SupervisorDashboard() {
                   Assign a new service request
                 </p>
               </div>
-            </button>
+            </Button>
 
-            <button className="flex items-center space-x-3 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-4 text-left hover:bg-[var(--color-surface)] transition-colors">
-              <div className="h-10 w-10 rounded-lg bg-green-500 flex items-center justify-center">
+            <Button
+              variant="outline"
+              className="flex h-auto w-full items-center justify-start space-x-3 p-4 text-left"
+            >
+              <div className="h-10 w-10 rounded bg-green-500 flex items-center justify-center">
                 <svg
                   className="h-5 w-5 text-white"
                   fill="none"
@@ -275,10 +282,13 @@ export default function SupervisorDashboard() {
                   Check team performance
                 </p>
               </div>
-            </button>
+            </Button>
 
-            <button className="flex items-center space-x-3 rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)] p-4 text-left hover:bg-[var(--color-surface)] transition-colors">
-              <div className="h-10 w-10 rounded-lg bg-blue-500 flex items-center justify-center">
+            <Button
+              variant="outline"
+              className="flex h-auto w-full items-center justify-start space-x-3 p-4 text-left"
+            >
+              <div className="h-10 w-10 rounded bg-blue-500 flex items-center justify-center">
                 <svg
                   className="h-5 w-5 text-white"
                   fill="none"
@@ -301,7 +311,7 @@ export default function SupervisorDashboard() {
                   Communicate with your team
                 </p>
               </div>
-            </button>
+            </Button>
           </div>
         </div>
       </div>

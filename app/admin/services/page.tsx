@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import { supabase } from "../../lib/supabaseClient";
+import Button from "../../components/ui/Button";
 
 type Service = {
   id: string;
@@ -78,7 +79,7 @@ export default function Services() {
   const [draftPrice, setDraftPrice] = useState("");
   const [draftImage, setDraftImage] = useState<File | null>(null);
   const [draftImagePreview, setDraftImagePreview] = useState<string | null>(
-    null
+    null,
   );
   const [isCreating, setIsCreating] = useState(false);
   const [editingService, setEditingService] = useState<Service | null>(null);
@@ -93,7 +94,7 @@ export default function Services() {
         formattedPrice: formatPrice(s.price),
         formattedCreatedAt: formatDateTime(s.createdAt),
       })),
-    [services]
+    [services],
   );
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -118,7 +119,7 @@ export default function Services() {
 
   const uploadImage = async (
     file: File,
-    serviceId: string
+    serviceId: string,
   ): Promise<string | null> => {
     try {
       const fileExt = file.name.split(".").pop();
@@ -136,7 +137,7 @@ export default function Services() {
         // If bucket doesn't exist, try to create it or use public URL
         console.error("Upload error:", uploadError);
         toast.error(
-          "Failed to upload image. Please ensure 'service-images' storage bucket exists."
+          "Failed to upload image. Please ensure 'service-images' storage bucket exists.",
         );
         return null;
       }
@@ -242,7 +243,7 @@ export default function Services() {
 
       if (isTableNotFound) {
         toast.error(
-          "Services table does not exist. Please create the 'services' table in your Supabase database."
+          "Services table does not exist. Please create the 'services' table in your Supabase database.",
         );
       } else {
         toast.error(insertError.message);
@@ -377,21 +378,17 @@ export default function Services() {
         </div>
 
         <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={() => setShowCreate((v) => !v)}
-            className="rounded-lg bg-(--color-accent) px-4 py-2 text-sm font-medium text-(--color-on-accent) hover:opacity-90"
-          >
+          <Button type="button" onClick={() => setShowCreate((v) => !v)}>
             Create service
-          </button>
-          <button
+          </Button>
+          <Button
             type="button"
             onClick={() => void loadServices()}
             disabled={isLoading}
-            className="rounded-lg border border-(--color-border) bg-(--color-bg) px-4 py-2 text-sm text-(--color-text) hover:opacity-90 disabled:opacity-60"
+            variant="outline"
           >
             Refresh
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -405,18 +402,19 @@ export default function Services() {
           }}
         >
           <div
-            className="w-full max-w-2xl rounded-xl border border-(--color-border) bg-(--color-surface) p-6 shadow-lg"
+            className="w-full max-w-2xl rounded border border-(--color-border) bg-(--color-surface) p-6 shadow-lg"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="mb-4 flex items-center justify-between">
               <h3 className="text-xl font-semibold text-(--color-text)">
                 {editingService ? "Edit Service" : "Create Service"}
               </h3>
-              <button
+              <Button
                 type="button"
+                variant="ghost"
                 onClick={cancelEdit}
                 disabled={isCreating}
-                className="rounded-lg p-1 text-(--color-text-muted) hover:bg-(--color-bg) disabled:opacity-50"
+                className="p-1 h-auto"
                 aria-label="Close"
               >
                 <svg
@@ -433,7 +431,7 @@ export default function Services() {
                     d="M6 18L18 6M6 6l12 12"
                   />
                 </svg>
-              </button>
+              </Button>
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2">
@@ -444,7 +442,7 @@ export default function Services() {
                 <input
                   value={draftName}
                   onChange={(e) => setDraftName(e.target.value)}
-                  className="w-full rounded-lg border border-(--color-border) bg-(--color-bg) px-3 py-2 text-sm text-(--color-text) outline-none focus:border-(--color-accent)"
+                  className="w-full rounded border border-(--color-border) bg-(--color-bg) px-3 py-2 text-sm text-(--color-text) outline-none focus:border-(--color-accent)"
                   placeholder="e.g. Plumbing"
                 />
               </div>
@@ -458,7 +456,7 @@ export default function Services() {
                   min="0"
                   value={draftPrice}
                   onChange={(e) => setDraftPrice(e.target.value)}
-                  className="w-full rounded-lg border border-(--color-border) bg-(--color-bg) px-3 py-2 text-sm text-(--color-text) outline-none focus:border-(--color-accent)"
+                  className="w-full rounded border border-(--color-border) bg-(--color-bg) px-3 py-2 text-sm text-(--color-text) outline-none focus:border-(--color-accent)"
                   placeholder="e.g. 50.00"
                 />
               </div>
@@ -470,7 +468,7 @@ export default function Services() {
                   value={draftDescription}
                   onChange={(e) => setDraftDescription(e.target.value)}
                   rows={3}
-                  className="w-full rounded-lg border border-(--color-border) bg-(--color-bg) px-3 py-2 text-sm text-(--color-text) outline-none focus:border-(--color-accent)"
+                  className="w-full rounded border border-(--color-border) bg-(--color-bg) px-3 py-2 text-sm text-(--color-text) outline-none focus:border-(--color-accent)"
                   placeholder="Short description"
                 />
               </div>
@@ -482,14 +480,14 @@ export default function Services() {
                   type="file"
                   accept="image/*"
                   onChange={handleImageChange}
-                  className="w-full rounded-lg border border-(--color-border) bg-(--color-bg) px-3 py-2 text-sm text-(--color-text) outline-none focus:border-(--color-accent)"
+                  className="w-full rounded border border-(--color-border) bg-(--color-bg) px-3 py-2 text-sm text-(--color-text) outline-none focus:border-(--color-accent)"
                 />
                 {draftImagePreview && (
                   <div className="mt-3">
                     <img
                       src={draftImagePreview}
                       alt="Preview"
-                      className="h-40 w-40 rounded-lg object-cover"
+                      className="h-40 w-40 rounded object-cover"
                     />
                   </div>
                 )}
@@ -497,37 +495,36 @@ export default function Services() {
             </div>
 
             <div className="mt-6 flex items-center justify-end gap-3">
-              <button
+              <Button
                 type="button"
                 onClick={cancelEdit}
                 disabled={isCreating}
-                className="rounded-lg border border-(--color-border) bg-(--color-bg) px-4 py-2 text-sm font-medium text-(--color-text) hover:opacity-90 disabled:opacity-60"
+                variant="outline"
               >
                 Cancel
-              </button>
-              <button
+              </Button>
+              <Button
                 type="button"
                 onClick={() =>
                   editingService ? void updateService() : void createService()
                 }
                 disabled={isCreating}
-                className="rounded-lg bg-(--color-accent) px-4 py-2 text-sm font-medium text-(--color-on-accent) hover:opacity-90 disabled:opacity-60"
               >
                 {isCreating
                   ? editingService
                     ? "Updating..."
                     : "Creating..."
                   : editingService
-                  ? "Update"
-                  : "Create"}
-              </button>
+                    ? "Update"
+                    : "Create"}
+              </Button>
             </div>
           </div>
         </div>
       ) : null}
 
       {errorMessage ? (
-        <div className="mb-6 rounded-xl border border-(--color-border) bg-(--color-surface) px-4 py-3 text-sm text-(--color-text)">
+        <div className="mb-6 rounded border border-(--color-border) bg-(--color-surface) px-4 py-3 text-sm text-(--color-text)">
           {errorMessage}
         </div>
       ) : null}
@@ -536,13 +533,13 @@ export default function Services() {
         {cards.map((s) => (
           <div
             key={s.id}
-            className="relative rounded-xl border border-(--color-border) bg-(--color-surface) p-4"
+            className="relative rounded border border-(--color-border) bg-(--color-surface) p-4"
           >
             <div className="absolute top-2 right-2 flex gap-2">
-              <button
+              <Button
                 type="button"
                 onClick={() => startEdit(s)}
-                className="rounded-lg bg-blue-500 p-2 text-white hover:bg-blue-600"
+                className="p-2 h-auto"
                 title="Edit service"
               >
                 <svg
@@ -559,12 +556,13 @@ export default function Services() {
                     d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
                   />
                 </svg>
-              </button>
-              <button
+              </Button>
+              <Button
                 type="button"
                 onClick={() => void deleteService(s.id)}
                 disabled={isDeleting === s.id}
-                className="rounded-lg bg-red-500 p-2 text-white hover:bg-red-600 disabled:opacity-50"
+                variant="danger"
+                className="p-2 h-auto"
                 title="Delete service"
               >
                 <svg
@@ -581,7 +579,7 @@ export default function Services() {
                     d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
                   />
                 </svg>
-              </button>
+              </Button>
             </div>
 
             {s.display_picture ? (
@@ -589,7 +587,7 @@ export default function Services() {
                 <img
                   src={s.display_picture}
                   alt={s.name}
-                  className="h-40 w-full rounded-lg object-cover"
+                  className="h-40 w-full rounded object-cover"
                 />
               </div>
             ) : null}
@@ -606,7 +604,7 @@ export default function Services() {
                 ) : null}
               </div>
               {s.formattedPrice ? (
-                <span className="rounded-full border border-(--color-border) bg-(--color-bg) px-3 py-1 text-sm text-(--color-text)">
+                <span className="rounded border border-(--color-border) bg-(--color-bg) px-3 py-1 text-sm text-(--color-text)">
                   {s.formattedPrice}
                 </span>
               ) : null}
@@ -621,7 +619,7 @@ export default function Services() {
         ))}
 
         {!isLoading && cards.length === 0 ? (
-          <div className="rounded-xl border border-(--color-border) bg-(--color-surface) px-4 py-10 text-center text-sm text-(--color-text-muted) sm:col-span-2 lg:col-span-3">
+          <div className="rounded border border-(--color-border) bg-(--color-surface) px-4 py-10 text-center text-sm text-(--color-text-muted) sm:col-span-2 lg:col-span-3">
             No services found
           </div>
         ) : null}

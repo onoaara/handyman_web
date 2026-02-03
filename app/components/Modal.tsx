@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import Button from "./ui/Button";
 
 type ModalProps = {
   isOpen: boolean;
@@ -40,15 +41,15 @@ const Modal = ({ isOpen, onClose, title, children }: ModalProps) => {
       }}
     >
       <div
-        className="w-full max-w-2xl rounded-xl border border-(--color-border) bg-(--color-surface) p-6 shadow-lg"
+        className="w-full max-w-2xl rounded border border-(--color-border) bg-(--color-surface) p-6 shadow-lg"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="mb-4 flex items-center justify-between">
           <h3 className="text-xl font-semibold text-(--color-text)">{title}</h3>
-          <button
-            type="button"
+          <Button
+            variant="ghost"
             onClick={onClose}
-            className="rounded-lg p-1 text-(--color-text-muted) hover:bg-(--color-bg) disabled:opacity-50"
+            className="h-8 w-8 p-0 text-(--color-text-muted)"
             aria-label="Close"
           >
             <svg
@@ -65,7 +66,7 @@ const Modal = ({ isOpen, onClose, title, children }: ModalProps) => {
                 d="M6 18L18 6M6 6l12 12"
               />
             </svg>
-          </button>
+          </Button>
         </div>
         {children}
       </div>

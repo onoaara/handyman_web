@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
-import authReducer, { type AuthState } from "./features/auth/authSlice";
-import themeReducer, { type ThemeState } from "./features/theme/themeSlice";
-import { usersApi } from "./features/users/usersApi";
+import authReducer, { type AuthState } from "./slices/authSlice";
+import themeReducer, { type ThemeState } from "./slices/themeSlice";
+import { usersApi } from "./api/usersApi";
 
 export const store = configureStore({
   reducer: {

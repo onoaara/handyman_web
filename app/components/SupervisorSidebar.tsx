@@ -15,7 +15,7 @@ export default function SupervisorSidebar() {
       <nav className="space-y-2">
         <Link
           href="/supervisor/dashboard"
-          className={`block rounded-lg px-4 py-2 text-sm transition-colors ${
+          className={`block rounded px-4 py-2 text-sm transition-colors ${
             pathname === "/supervisor/dashboard"
               ? "bg-(--color-accent) font-semibold text-(--color-on-accent)"
               : "text-(--color-text) hover:bg-(--color-bg) hover:text-(--color-text)"
@@ -25,7 +25,7 @@ export default function SupervisorSidebar() {
         </Link>
 
         <details className="group">
-          <summary className="flex cursor-pointer list-none items-center justify-between rounded-lg px-4 py-2 text-sm text-(--color-text) transition-colors hover:bg-(--color-bg)">
+          <summary className="flex cursor-pointer list-none items-center justify-between rounded px-4 py-2 text-sm text-(--color-text) transition-colors hover:bg-(--color-bg)">
             <span>Users</span>
 
             {/* Chevron */}
@@ -47,7 +47,7 @@ export default function SupervisorSidebar() {
           <div className="mt-2 ml-4 space-y-1">
             <Link
               href="/supervisor/users/handymen"
-              className={`block rounded-lg px-4 py-2 text-sm transition-colors ${
+              className={`block rounded px-4 py-2 text-sm transition-colors ${
                 pathname === "/supervisor/users/handymen"
                   ? "bg-(--color-accent) font-semibold text-(--color-on-accent)"
                   : "text-(--color-text) hover:bg-(--color-bg) hover:text-(--color-text)"
@@ -58,7 +58,7 @@ export default function SupervisorSidebar() {
 
             <Link
               href="/supervisor/users/users"
-              className={`block rounded-lg px-4 py-2 text-sm transition-colors ${
+              className={`block rounded px-4 py-2 text-sm transition-colors ${
                 pathname === "/supervisor/users/users"
                   ? "bg-(--color-accent) font-semibold text-(--color-on-accent)"
                   : "text-(--color-text) hover:bg-(--color-bg) hover:text-(--color-text)"
@@ -69,7 +69,7 @@ export default function SupervisorSidebar() {
 
             <Link
               href="/supervisor/users/all-users"
-              className={`block rounded-lg px-4 py-2 text-sm transition-colors ${
+              className={`block rounded px-4 py-2 text-sm transition-colors ${
                 pathname === "/supervisor/users/all-users"
                   ? "bg-(--color-accent) font-semibold text-(--color-on-accent)"
                   : "text-(--color-text) hover:bg-(--color-bg) hover:text-(--color-text)"
@@ -82,7 +82,7 @@ export default function SupervisorSidebar() {
 
         <Link
           href="/supervisor/settings"
-          className={`block rounded-lg px-4 py-2 text-sm transition-colors ${
+          className={`block rounded px-4 py-2 text-sm transition-colors ${
             pathname === "/supervisor/settings"
               ? "bg-(--color-accent) font-semibold text-(--color-on-accent)"
               : "text-(--color-text) hover:bg-(--color-bg) hover:text-(--color-text)"
