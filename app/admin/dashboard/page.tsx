@@ -2,9 +2,20 @@
 
 import Button from "@/app/components/ui/Button";
 import { useAppSelector } from "../../redux/hooks";
+import { useGetUsersQuery } from "../../redux/api/usersApi";
+import { useGetServicesQuery } from "../../redux/api/servicesApi";
+import { useGetBookingsQuery } from "../../redux/api/bookingsApi";
 
 export default function AdminDashboard() {
   const user = useAppSelector((state) => state.auth.user);
+
+  const { data: users = [] } = useGetUsersQuery();
+  const { data: services = [] } = useGetServicesQuery();
+  const { data: bookings = [] } = useGetBookingsQuery();
+
+  const totalUsers = users.length;
+  const activeServices = services.length;
+  const pendingRequests = bookings.filter((b) => b.status === "pending").length;
 
   return (
     <div className="space-y-6">
@@ -53,7 +64,9 @@ export default function AdminDashboard() {
               <p className="text-sm font-medium text-(--color-text-muted)">
                 Total Users
               </p>
-              <p className="text-2xl font-bold text-(--color-text)">1,234</p>
+              <p className="text-2xl font-bold text-(--color-text)">
+                {totalUsers}
+              </p>
             </div>
           </div>
         </div>
@@ -79,7 +92,9 @@ export default function AdminDashboard() {
               <p className="text-sm font-medium text-(--color-text-muted)">
                 Active Services
               </p>
-              <p className="text-2xl font-bold text-(--color-text)">89</p>
+              <p className="text-2xl font-bold text-(--color-text)">
+                {activeServices}
+              </p>
             </div>
           </div>
         </div>
@@ -105,7 +120,9 @@ export default function AdminDashboard() {
               <p className="text-sm font-medium text-(--color-text-muted)">
                 Pending Requests
               </p>
-              <p className="text-2xl font-bold text-(--color-text)">23</p>
+              <p className="text-2xl font-bold text-(--color-text)">
+                {pendingRequests}
+              </p>
             </div>
           </div>
         </div>

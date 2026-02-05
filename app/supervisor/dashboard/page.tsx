@@ -2,9 +2,20 @@
 
 import { useAppSelector } from "../../redux/hooks";
 import Button from "../../components/ui/Button";
+import { useGetUsersQuery } from "../../redux/api/usersApi";
+import { useGetServicesQuery } from "../../redux/api/servicesApi";
+import { useGetBookingsQuery } from "../../redux/api/bookingsApi";
 
 export default function SupervisorDashboard() {
   const user = useAppSelector((state) => state.auth.user);
+
+  const { data: users = [] } = useGetUsersQuery();
+  const { data: services = [] } = useGetServicesQuery();
+  const { data: bookings = [] } = useGetBookingsQuery();
+
+  const totalUsers = users.length;
+  const activeServices = services.length;
+  const pendingRequests = bookings.filter((b) => b.status === "pending").length;
 
   return (
     <div className="space-y-6">
@@ -50,9 +61,11 @@ export default function SupervisorDashboard() {
             </div>
             <div className="ml-4">
               <p className="text-sm font-medium text-[var(--color-text-muted)]">
-                My Team
+                Total Users
               </p>
-              <p className="text-2xl font-bold text-[var(--color-text)]">24</p>
+              <p className="text-2xl font-bold text-[var(--color-text)]">
+                {totalUsers}
+              </p>
             </div>
           </div>
         </div>
@@ -76,9 +89,11 @@ export default function SupervisorDashboard() {
             </div>
             <div className="ml-4">
               <p className="text-sm font-medium text-[var(--color-text-muted)]">
-                Completed Today
+                Active Services
               </p>
-              <p className="text-2xl font-bold text-[var(--color-text)]">12</p>
+              <p className="text-2xl font-bold text-[var(--color-text)]">
+                {activeServices}
+              </p>
             </div>
           </div>
         </div>
@@ -102,9 +117,11 @@ export default function SupervisorDashboard() {
             </div>
             <div className="ml-4">
               <p className="text-sm font-medium text-[var(--color-text-muted)]">
-                Pending Assignments
+                Pending Requests
               </p>
-              <p className="text-2xl font-bold text-[var(--color-text)]">8</p>
+              <p className="text-2xl font-bold text-[var(--color-text)]">
+                {pendingRequests}
+              </p>
             </div>
           </div>
         </div>
