@@ -65,7 +65,7 @@ export default function Pagination({
       )}
     >
       <div className="text-xs font-medium text-(--color-text)">
-        Showing {startItem} of {totalCount} contacts
+        Showing {startItem} of {totalCount} items
       </div>
       <div className="flex items-center border border-(--color-border) rounded">
         <Button

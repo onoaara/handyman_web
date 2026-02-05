@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import UsersTable from "../../../components/UsersTable";
-import EditUserModal from "../../../components/EditUserModal";
-import CreateUserModal from "../../../components/CreateUserModal";
+import EditUserModal from "../../../components/modals/EditUserModal";
+import CreateUserModal from "../../../components/modals/CreateUserModal";
 import { useGetUsersQuery } from "../../../redux/api/usersApi";
 import type { ApiUser } from "../../../redux/api/usersApi";
 import Button from "@/app/components/ui/Button";

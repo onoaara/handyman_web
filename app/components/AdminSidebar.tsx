@@ -106,6 +106,17 @@ export default function AdminSidebar() {
         </Link>
 
         <Link
+          href="/admin/shops"
+          className={`block rounded px-4 py-2 text-sm transition-colors ${
+            pathname === "/admin/shops"
+              ? "bg-(--color-accent) font-semibold text-(--color-on-accent)"
+              : "text-(--color-text) hover:bg-(--color-bg) hover:text-(--color-text)"
+          }`}
+        >
+          Shops
+        </Link>
+
+        <Link
           href="/admin/settings"
           className={`block rounded px-4 py-2 text-sm transition-colors ${
             pathname === "/admin/settings"

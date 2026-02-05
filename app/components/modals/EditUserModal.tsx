@@ -1,98 +1,106 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "sonner";
-import Modal from "./Modal";
-import Button from "./ui/Button";
+import Modal from "../ui/Modal";
+import type { ApiUser } from "../../redux/api/usersApi";
+import Button from "../ui/Button";
 
-type CreateUserModalProps = {
+type EditUserModalProps = {
   isOpen: boolean;
   onClose: () => void;
-  onCreate: (userData: {
-    name: string;
-    email: string;
-    location: string;
-    role: string;
-    password: string;
-  }) => Promise<void>;
+  user: ApiUser | null;
+  onSave: (userId: string, updates: Partial<ApiUser>) => Promise<void>;
 };
 
-const CreateUserModal = ({
+const EditUserModal = ({
   isOpen,
   onClose,
-  onCreate,
-}: CreateUserModalProps) => {
+  user,
+  onSave,
+}: EditUserModalProps) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     location: "",
     role: "",
-    password: "",
-    confirmPassword: "",
+    email_verified: false,
+    phone_verified: false,
   });
   const [isLoading, setIsLoading] = useState(false);
 
+  useEffect(() => {
+    if (user && isOpen) {
+      // Extract role from user metadata
+      const appMetadata =
+        user.app_metadata && typeof user.app_metadata === "object"
+          ? (user.app_metadata as Record<string, unknown>)
+          : null;
+      const userMetadata =
+        user.user_metadata && typeof user.user_metadata === "object"
+          ? (user.user_metadata as Record<string, unknown>)
+          : null;
+
+      const role = appMetadata?.role ?? userMetadata?.role ?? "";
+
+      setFormData({
+        name: user.name || "",
+        email: user.email || "",
+        location: user.location || "",
+        role: typeof role === "string" ? role : "",
+        email_verified: user.email_verified || false,
+        phone_verified: user.phone_verified || false,
+      });
+    }
+  }, [user, isOpen]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (formData.password !== formData.confirmPassword) {
-      toast.error("Passwords do not match");
-      return;
-    }
-
-    if (formData.password.length < 6) {
-      toast.error("Password must be at least 6 characters long");
-      return;
-    }
+    if (!user) return;
 
     setIsLoading(true);
     try {
-      await onCreate({
-        name: formData.name,
+      const updates: Partial<ApiUser> = {
+        name: formData.name || null,
         email: formData.email,
-        location: formData.location,
-        role: formData.role,
-        password: formData.password,
-      });
+        location: formData.location || null,
+        user_metadata: {
+          ...user.user_metadata,
+          role: formData.role || undefined,
+          email_verified: formData.email_verified,
+          phone_verified: formData.phone_verified,
+        },
+      };
 
-      toast.success("User created successfully");
+      await onSave(user.id, updates);
+      toast.success("User updated successfully");
       onClose();
-      // Reset form
-      setFormData({
-        name: "",
-        email: "",
-        location: "",
-        role: "",
-        password: "",
-        confirmPassword: "",
-      });
     } catch (error) {
-      toast.error("Failed to create user");
-      console.error("Create error:", error);
+      toast.error("Failed to update user");
+      console.error("Update error:", error);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleInputChange = (field: string, value: string) => {
+  const handleInputChange = (field: string, value: string | boolean) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Create New User">
+    <Modal isOpen={isOpen} onClose={onClose} title="Edit User">
       <form onSubmit={handleSubmit}>
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="sm:col-span-1">
             <label className="mb-1 block text-sm font-medium text-(--color-text)">
-              Name <span className="text-red-500">*</span>
+              Name
             </label>
             <input
               type="text"
               value={formData.name}
               onChange={(e) => handleInputChange("name", e.target.value)}
               className="w-full rounded border border-(--color-border) bg-(--color-bg) px-3 py-2 text-sm text-(--color-text) outline-none focus:border-(--color-accent)"
-              placeholder="Enter full name"
-              required
+              placeholder="Enter name"
             />
           </div>
 
@@ -105,7 +113,7 @@ const CreateUserModal = ({
               value={formData.email}
               onChange={(e) => handleInputChange("email", e.target.value)}
               className="w-full rounded border border-(--color-border) bg-(--color-bg) px-3 py-2 text-sm text-(--color-text) outline-none focus:border-(--color-accent)"
-              placeholder="Enter email address"
+              placeholder="Enter email"
               required
             />
           </div>
@@ -125,13 +133,12 @@ const CreateUserModal = ({
 
           <div className="sm:col-span-1">
             <label className="mb-1 block text-sm font-medium text-(--color-text)">
-              Role <span className="text-red-500">*</span>
+              Role
             </label>
             <select
               value={formData.role}
               onChange={(e) => handleInputChange("role", e.target.value)}
               className="w-full rounded border border-(--color-border) bg-(--color-bg) px-3 py-2 text-sm text-(--color-text) outline-none focus:border-(--color-accent)"
-              required
             >
               <option value="">Select role</option>
               <option value="admin">Admin</option>
@@ -143,48 +150,54 @@ const CreateUserModal = ({
 
           <div className="sm:col-span-1">
             <label className="mb-1 block text-sm font-medium text-(--color-text)">
-              Password <span className="text-red-500">*</span>
+              Email Verified
             </label>
-            <input
-              type="password"
-              value={formData.password}
-              onChange={(e) => handleInputChange("password", e.target.value)}
-              className="w-full rounded border border-(--color-border) bg-(--color-bg) px-3 py-2 text-sm text-(--color-text) outline-none focus:border-(--color-accent)"
-              placeholder="Enter password (min 6 characters)"
-              required
-              minLength={6}
-            />
+            <div className="flex items-center">
+              <input
+                type="checkbox"
+                checked={formData.email_verified}
+                onChange={(e) =>
+                  handleInputChange("email_verified", e.target.checked)
+                }
+                className="h-4 w-4 rounded border-(--color-border) text-(--color-accent) focus:ring-(--color-accent)"
+              />
+              <span className="ml-2 text-sm text-(--color-text)">
+                Email is verified
+              </span>
+            </div>
           </div>
 
           <div className="sm:col-span-1">
             <label className="mb-1 block text-sm font-medium text-(--color-text)">
-              Confirm Password <span className="text-red-500">*</span>
+              Phone Verified
             </label>
-            <input
-              type="password"
-              value={formData.confirmPassword}
-              onChange={(e) =>
-                handleInputChange("confirmPassword", e.target.value)
-              }
-              className="w-full rounded border border-(--color-border) bg-(--color-bg) px-3 py-2 text-sm text-(--color-text) outline-none focus:border-(--color-accent)"
-              placeholder="Confirm password"
-              required
-              minLength={6}
-            />
+            <div className="flex items-center">
+              <input
+                type="checkbox"
+                checked={formData.phone_verified}
+                onChange={(e) =>
+                  handleInputChange("phone_verified", e.target.checked)
+                }
+                className="h-4 w-4 rounded border-(--color-border) text-(--color-accent) focus:ring-(--color-accent)"
+              />
+              <span className="ml-2 text-sm text-(--color-text)">
+                Phone is verified
+              </span>
+            </div>
           </div>
         </div>
 
         <div className="mt-6 flex items-center justify-end gap-3">
           <Button
             type="button"
-            variant="outline"
             onClick={onClose}
             disabled={isLoading}
+            variant="outline"
           >
             Cancel
           </Button>
-          <Button type="submit" variant="primary" disabled={isLoading}>
-            {isLoading ? "Creating..." : "Create User"}
+          <Button type="submit" disabled={isLoading} variant="primary">
+            {isLoading ? "Saving..." : "Save Changes"}
           </Button>
         </div>
       </form>
@@ -192,4 +205,4 @@ const CreateUserModal = ({
   );
 };
 
-export default CreateUserModal;
+export default EditUserModal;
