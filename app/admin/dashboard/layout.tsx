@@ -10,7 +10,7 @@ export default function DashboardLayout({
     <div id="page-wrapper">
       <AppHeader />
       <AdminSidebar />
-      <main id="main">{children}</main>
+      <main>{children}</main>
     </div>
   );
 }

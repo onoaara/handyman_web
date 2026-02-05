@@ -8,8 +8,7 @@ import {
   selectAuthRole,
   selectIsAllowedAuthenticated,
 } from "../redux/slices/authSlice";
-import SupervisorSidebar from "../components/SupervisorSidebar";
-import AppHeader from "../components/AppHeader";
+import NewProvider from "./providers";
 
 export default function SupervisorLayout({
   children,
@@ -37,12 +36,12 @@ export default function SupervisorLayout({
   if (!isAllowed || authRole !== "supervisor") return null;
 
   return (
-    <div className="flex min-h-screen bg-(--color-bg) text-(--color-text)">
-      <SupervisorSidebar />
-      <main className="flex-1 bg-(--color-bg) p-6">
-        <AppHeader title="Supervisor" />
-        {children}
-      </main>
-    </div>
+    <html lang="en">
+      <body>
+        <NewProvider>
+          <div className="bg-(--color-bg)">{children}</div>
+        </NewProvider>
+      </body>
+    </html>
   );
 }

@@ -10,9 +10,7 @@ export default function ServicesLayout({
     <div id="page-wrapper">
       <AppHeader />
       <AdminSidebar />
-      <main id="main" className="bg-gray-50 h-full">
-        {children}
-      </main>
+      <main>{children}</main>
     </div>
   );
 }

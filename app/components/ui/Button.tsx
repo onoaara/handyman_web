@@ -10,7 +10,8 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = "primary", ...props }, ref) => {
     const variants = {
-      primary: "bg-(--color-accent) text-(--color-on-accent) hover:opacity-90 disabled:opacity-50",
+      primary:
+        "bg-(--color-accent) text-(--color-on-accent) hover:opacity-90 disabled:opacity-50",
       secondary:
         "bg-(--color-surface) text-(--color-text) border border-(--color-border) hover:bg-(--color-bg) disabled:opacity-50",
       outline:

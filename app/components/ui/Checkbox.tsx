@@ -13,12 +13,12 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
         ref={ref}
         className={clsx(
           "h-4 w-4 rounded border-(--color-border) text-(--color-accent) focus:ring-(--color-accent)",
-          className
+          className,
         )}
         {...props}
       />
     );
-  }
+  },
 );
 
 Checkbox.displayName = "Checkbox";

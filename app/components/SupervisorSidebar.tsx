@@ -7,7 +7,10 @@ export default function SupervisorSidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="w-64 border-r border-(--color-border) bg-(--color-surface) p-4">
+    <aside
+      id="side-nav"
+      className="w-64 border-r border-(--color-border) bg-(--color-surface) p-4"
+    >
       <h2 className="mb-6 text-lg font-semibold text-(--color-text)">
         Handyman Supervisor
       </h2>

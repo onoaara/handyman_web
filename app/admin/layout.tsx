@@ -36,12 +36,12 @@ export default function AdminLayout({
   if (!isAllowed || authRole !== "admin") return null;
 
   return (
-    <NewProvider>
-      <div id="page-wrapper" className="bg-(--color-bg) text-(--color-text)">
-        <div id="main" className="bg-(--color-bg)">
-          {children}
-        </div>
-      </div>
-    </NewProvider>
+    <html lang="en">
+      <body>
+        <NewProvider>
+          <div className="bg-(--color-bg)">{children}</div>
+        </NewProvider>
+      </body>
+    </html>
   );
 }

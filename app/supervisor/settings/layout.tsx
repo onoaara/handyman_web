@@ -1,4 +1,4 @@
-import AdminSidebar from "@/app/components/AdminSidebar";
+import SupervisorSidebar from "@/app/components/SupervisorSidebar";
 import AppHeader from "@/app/components/AppHeader";
 
 export default function SettingsLayout({
@@ -9,7 +9,7 @@ export default function SettingsLayout({
   return (
     <div id="page-wrapper">
       <AppHeader />
-      <AdminSidebar />
+      <SupervisorSidebar />
       <main>{children}</main>
     </div>
   );
