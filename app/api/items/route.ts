@@ -11,7 +11,7 @@ export async function GET(request: Request) {
     const shop_id = searchParams.get("shop_id");
 
     let query = supabaseAdmin
-      .from("services")
+      .from("items")
       .select("*")
       .order("created_at", { ascending: false });
 
@@ -28,7 +28,7 @@ export async function GET(request: Request) {
     return NextResponse.json(data);
   } catch (error) {
     const message =
-      error instanceof Error ? error.message : "Failed to fetch services";
+      error instanceof Error ? error.message : "Failed to fetch items";
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }

@@ -4,6 +4,32 @@ import {
   validateSupabaseAdminConfig,
 } from "@/app/lib/supabase-admin";
 
+export async function GET(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> },
+) {
+  try {
+    validateSupabaseAdminConfig();
+    const { id } = await params;
+
+    const { data, error } = await supabaseAdmin
+      .from("shops")
+      .select("*")
+      .eq("id", id)
+      .single();
+
+    if (error) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+
+    return NextResponse.json(data);
+  } catch (error) {
+    const message =
+      error instanceof Error ? error.message : "Failed to fetch shop";
+    return NextResponse.json({ error: message }, { status: 500 });
+  }
+}
+
 export async function PATCH(
   request: Request,
   { params }: { params: Promise<{ id: string }> },

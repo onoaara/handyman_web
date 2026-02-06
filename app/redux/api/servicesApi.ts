@@ -14,8 +14,13 @@ export const servicesApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "/api" }),
   tagTypes: ["Services"],
   endpoints: (builder) => ({
-    getServices: builder.query<Service[], void>({
-      query: () => "/services",
+    getServices: builder.query<Service[], { shop_id?: string } | void>({
+      query: (params) => {
+        if (params && params.shop_id) {
+          return `/services?shop_id=${params.shop_id}`;
+        }
+        return "/services";
+      },
       providesTags: ["Services"],
     }),
   }),

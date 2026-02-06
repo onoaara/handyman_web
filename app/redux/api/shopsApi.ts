@@ -24,6 +24,10 @@ export const shopsApi = createApi({
       query: () => "/shops",
       providesTags: ["Shops"],
     }),
+    getShop: builder.query<Shop, string>({
+      query: (id) => `/shops/${id}`,
+      providesTags: (result, error, id) => [{ type: "Shops", id }],
+    }),
     createShop: builder.mutation<Shop, Partial<Shop>>({
       query: (body) => ({
         url: "/shops",
@@ -52,6 +56,7 @@ export const shopsApi = createApi({
 
 export const {
   useGetShopsQuery,
+  useGetShopQuery,
   useCreateShopMutation,
   useUpdateShopMutation,
   useDeleteShopMutation,

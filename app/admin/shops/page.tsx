@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Button from "@/app/components/ui/Button";
 import DataTable, { Column } from "@/app/components/DataTable";
 import CreateShopModal from "@/app/components/modals/admin-modals/CreateShopModal";
@@ -12,8 +13,10 @@ import {
   Shop,
 } from "@/app/redux/api/shopsApi";
 import { useGetUsersQuery } from "@/app/redux/api/usersApi";
+import { FiArrowRight } from "react-icons/fi";
 
 export default function Shops() {
+  const router = useRouter();
   const { data: shops = [], isLoading, refetch } = useGetShopsQuery();
   const [createShop] = useCreateShopMutation();
   const [updateShop] = useUpdateShopMutation();
@@ -139,6 +142,22 @@ export default function Shops() {
           onClick={() => handleEditClick(item)}
         >
           Edit
+        </Button>
+      ),
+    },
+    {
+      key: "id",
+      header: "Visit Shop",
+      render: (_, item) => (
+        <Button
+          // size="sm"
+          variant="outline"
+          onClick={(e) => {
+            e.stopPropagation();
+            router.push(`/admin/shops/${item.id}`);
+          }}
+        >
+          <FiArrowRight className="h-3 w-3" />
         </Button>
       ),
     },
