@@ -6,10 +6,13 @@ import Modal from "../../ui/Modal";
 import Button from "../../ui/Button";
 import { useGetUsersQuery } from "../../../redux/api/usersApi";
 import { filterUsersByRole } from "../../../redux/api/userRoles";
+import { Shop } from "../../../redux/api/shopsApi";
+import { supabase } from "@/app/lib/supabaseClient";
 
 type CreateShopModalProps = {
   isOpen: boolean;
   onClose: () => void;
+  existingShops: Shop[];
   onCreate: (shopData: {
     name: string;
     description: string;
@@ -19,12 +22,14 @@ type CreateShopModalProps = {
     athour: string;
     supervisor_id: string;
     is_active: boolean;
+    image_url?: string;
   }) => Promise<void>;
 };
 
 const CreateShopModal = ({
   isOpen,
   onClose,
+  existingShops,
   onCreate,
 }: CreateShopModalProps) => {
   const [formData, setFormData] = useState({
@@ -37,11 +42,47 @@ const CreateShopModal = ({
     supervisor_id: "",
     is_active: true,
   });
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const { data: users = [] } = useGetUsersQuery();
   const handymen = filterUsersByRole(users, "handyman");
   const supervisors = filterUsersByRole(users, "supervisor");
+
+  // Filter out handymen who already have a shop
+  const assignedHandymenIds = new Set(existingShops.map((s) => s.athour));
+  const availableHandymen = handymen.filter(
+    (h) => !assignedHandymenIds.has(h.id),
+  );
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setImageFile(file);
+      const previewUrl = URL.createObjectURL(file);
+      setImagePreview(previewUrl);
+    }
+  };
+
+  const uploadImage = async (userId: string, file: File) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("userId", userId);
+
+    const response = await fetch("/api/upload", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || "Failed to upload image");
+    }
+
+    const data = await response.json();
+    return data.url;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,7 +99,18 @@ const CreateShopModal = ({
 
     setIsLoading(true);
     try {
-      await onCreate(formData);
+      let imageUrl = "";
+
+      if (imageFile) {
+        // Use the handyman's ID as the userId for the folder structure, as suggested
+        imageUrl = await uploadImage(formData.athour, imageFile);
+      }
+
+      await onCreate({
+        ...formData,
+        image_url: imageUrl || undefined,
+      });
+
       toast.success("Shop created successfully");
       onClose();
       // Reset form
@@ -72,6 +124,8 @@ const CreateShopModal = ({
         supervisor_id: "",
         is_active: true,
       });
+      setImageFile(null);
+      setImagePreview(null);
     } catch (error) {
       toast.error("Failed to create shop");
       console.error("Create error:", error);
@@ -88,6 +142,51 @@ const CreateShopModal = ({
     <Modal size="lg" isOpen={isOpen} onClose={onClose} title="Create New Shop">
       <form onSubmit={handleSubmit}>
         <div className="grid gap-4 sm:grid-cols-2">
+          {/* Image Upload Section */}
+          <div className="sm:col-span-2">
+            <label className="mb-1 block text-sm font-medium text-(--color-text)">
+              Shop Image
+            </label>
+            <div className="flex items-center gap-4">
+              <div className="relative h-20 w-20 overflow-hidden rounded border border-(--color-border) bg-(--color-bg)">
+                {imagePreview ? (
+                  <img
+                    src={imagePreview}
+                    alt="Shop Preview"
+                    className="h-full w-full object-cover"
+                  />
+                ) : (
+                  <div className="flex h-full w-full items-center justify-center text-(--color-text-muted)">
+                    <svg
+                      className="h-8 w-8"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                      />
+                    </svg>
+                  </div>
+                )}
+              </div>
+              <div>
+                <input
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp"
+                  onChange={handleImageChange}
+                  className="block w-full text-sm text-(--color-text) file:mr-4 file:rounded file:border-0 file:bg-(--color-accent) file:px-4 file:py-2 file:text-sm file:font-semibold file:text-(--color-on-accent) hover:file:bg-(--color-accent)/90"
+                />
+                <p className="mt-1 text-xs text-(--color-text-muted)">
+                  JPG, PNG or WebP. Max 5MB.
+                </p>
+              </div>
+            </div>
+          </div>
+
           <div className="sm:col-span-1">
             <label className="mb-1 block text-sm font-medium text-(--color-text)">
               Name <span className="text-red-500">*</span>
@@ -112,10 +211,14 @@ const CreateShopModal = ({
               className="w-full rounded border border-(--color-border) bg-(--color-bg) px-3 py-2 text-sm text-(--color-text) outline-none focus:border-(--color-accent)"
               required
             >
-              <option value="">Select a handyman</option>
-              {handymen.map((handyman) => (
-                <option key={handyman.id} value={handyman.id}>
-                  {handyman.name || handyman.email}
+              <option value="">
+                {availableHandymen.length === 0
+                  ? "No available handymen found (all already have shops)"
+                  : "Select Handyman"}
+              </option>
+              {availableHandymen.map((h) => (
+                <option key={h.id} value={h.id}>
+                  {h.name || h.email}
                 </option>
               ))}
             </select>

@@ -135,11 +135,13 @@ export default function LoginPage() {
 
       {/* RIGHT: Image Section (3/5) */}
       <div className="relative hidden lg:col-span-3 lg:block">
-        <img
-          src={imageUrl}
-          alt="Random background"
-          className="h-full w-full object-cover"
-        />
+        {imageUrl && (
+          <img
+            src={imageUrl}
+            alt="Random background"
+            className="h-full w-full object-cover"
+          />
+        )}
         <div className="absolute inset-0 bg-black/20" />
       </div>
     </div>

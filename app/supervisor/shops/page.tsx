@@ -3,8 +3,8 @@
 import { useState } from "react";
 import Button from "@/app/components/ui/Button";
 import DataTable, { Column } from "@/app/components/DataTable";
-import CreateShopModal from "@/app/components/modals/admin-modals/CreateShopModal";
-import EditShopModal from "@/app/components/modals/admin-modals/EditShopModal";
+// import CreateShopModal from "@/app/components/modals/admin-modals/CreateShopModal";
+// import EditShopModal from "@/app/components/modals/admin-modals/EditShopModal";
 import {
   useGetShopsQuery,
   useCreateShopMutation,
@@ -41,37 +41,6 @@ export default function Shops() {
   };
 
   const columns: Column<Shop>[] = [
-    {
-      key: "image_url",
-      header: "Image",
-      render: (value, item) => (
-        <div className="h-10 w-10 overflow-hidden rounded bg-gray-100">
-          {item.image_url ? (
-            <img
-              src={item.image_url}
-              alt={item.name}
-              className="h-full w-full object-cover"
-            />
-          ) : (
-            <div className="flex h-full w-full items-center justify-center text-gray-400">
-              <svg
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                />
-              </svg>
-            </div>
-          )}
-        </div>
-      ),
-    },
     {
       key: "name",
       header: "Name",
@@ -183,19 +152,18 @@ export default function Shops() {
         />
       </div>
 
-      <CreateShopModal
+      {/* <CreateShopModal
         isOpen={isCreateModalOpen}
         onClose={() => setIsCreateModalOpen(false)}
-        existingShops={shops}
         onCreate={handleCreateShop}
-      />
+      /> */}
 
-      <EditShopModal
+      {/* <EditShopModal
         isOpen={isEditModalOpen}
         onClose={() => setIsEditModalOpen(false)}
         shop={selectedShop}
         onUpdate={handleUpdateShop}
-      />
+      /> */}
     </>
   );
 }

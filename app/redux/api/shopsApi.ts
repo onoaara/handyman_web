@@ -12,6 +12,7 @@ export type Shop = {
   athour: string;
   supervisor_id: string;
   location: string;
+  image_url?: string;
 };
 
 export const shopsApi = createApi({

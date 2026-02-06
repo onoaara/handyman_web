@@ -84,6 +84,28 @@ export default function SupervisorSidebar() {
         </details>
 
         <Link
+          href="/supervisor/services"
+          className={`block rounded px-4 py-2 text-sm transition-colors ${
+            pathname === "/supervisor/services"
+              ? "bg-(--color-accent) font-semibold text-(--color-on-accent)"
+              : "text-(--color-text) hover:bg-(--color-bg) hover:text-(--color-text)"
+          }`}
+        >
+          Services
+        </Link>
+
+        <Link
+          href="/supervisor/shops"
+          className={`block rounded px-4 py-2 text-sm transition-colors ${
+            pathname === "/supervisor/shops"
+              ? "bg-(--color-accent) font-semibold text-(--color-on-accent)"
+              : "text-(--color-text) hover:bg-(--color-bg) hover:text-(--color-text)"
+          }`}
+        >
+          Shops
+        </Link>
+
+        <Link
           href="/supervisor/settings"
           className={`block rounded px-4 py-2 text-sm transition-colors ${
             pathname === "/supervisor/settings"
